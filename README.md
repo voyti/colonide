@@ -1,4 +1,6 @@
 # colonide
+![image](https://user-images.githubusercontent.com/6819634/32415420-ff12c688-c239-11e7-87d8-df470cec001a.png)
+
 Using Phaser - HTML5 Game Framework:
 
 # Phaser - HTML5 Game Framework
