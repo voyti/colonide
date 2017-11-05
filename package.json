@@ -1,0 +1,30 @@
+{
+  "name": "colonide",
+  "version": "0.0.1",
+  "description": "<img src=\"http://phaser.io/images/github/arcade-cab.png\" align=\"right\">",
+  "main": "/dist/index.html",
+  "scripts": {
+    "test": "npm test",
+    "prestart": "./prestart.sh",
+    "start": "node node_modules/http-server/bin/http-server dist/ -p 8080 -a 0.0.0.0 -c-1",
+    "start-dev": "node node_modules/http-server/bin/http-server dist/ -p 8080 -a 0.0.0.0 -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": " "
+  },
+  "author": "voyti",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "eslint-config-defaults": "^9.0.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "clear-require": "^2.0.0",
+    "http-server": "^0.10.0"
+  }
+}
