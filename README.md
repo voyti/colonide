@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # colonide
 Using Phaser - HTML5 Game Framework:
 
@@ -360,3 +361,6 @@ All rights reserved.
 [game16]: http://phaser.io/news/2015/05/trappy-trap
 [game17]: http://phaser.io/news/2015/04/runaway-ruins
 [game18]: http://phaser.io/news/2015/04/ananias
+=======
+# colonide
+>>>>>>> 5cbcd32ea5d2e3fd2fce1e09abace75d793f7f96
