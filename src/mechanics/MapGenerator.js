@@ -8,12 +8,9 @@ export default class MapGenerator {
     this.PlanetDrawer = new PlanetDrawer();
   }
   
-  generateMap(planets, graphics) {
+  generateMap(planets, game) {
     _.forEach(planets, (planet) => {
-      graphics.lineStyle(2, 0x499FD3, 1);
-      graphics.beginFill(planet.color, 1);
-      graphics.drawCircle(planet.x, planet.y, planet.size / 1000);
-      this.PlanetDrawer.drawPlanet(planet, graphics);
+      this.PlanetDrawer.drawPlanet(planet, game);
     });
   }
 }

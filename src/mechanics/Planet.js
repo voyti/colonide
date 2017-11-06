@@ -6,25 +6,39 @@ export default class Planet {
     this.isHabitable = isHabitable;
     this.potential = potential;
     this.resourcesLevel = resourcesLevel;
+    this.drawingData = {};
     this.x = x;
     this.y = y;
-    
+
     this._generateInfo();
   }
   
+  static get MAX_HABIT_TEMP() {
+    return 39;
+  }  
+  static get MIN_HABIT_TEMP() {
+    return -23;
+  }  
+  static get MAX_TEMP() {
+    return 186;
+  }  
+  static get MIN_TEMP() {
+    return -234;
+  }
+  
+  setDrawingData(planetImg, planetSprite) {
+    this.drawingData.img = planetImg;
+    this.drawingData.sprite = planetSprite;
+  }
+  
   _generateInfo() {
-    const MIN_TEMP = -234;
-    const MIN_HABIT_TEMP = -23;
-    const MAX_TEMP = 186;
-    const MAX_HABIT_TEMP = 39;
-    
     const MIN_DIST = 0.4;
     const MAX_DIST = 50;
-    const tempRangle = (MAX_TEMP - MIN_TEMP);
+    const tempRangle = (Planet.MAX_TEMP - Planet.MIN_TEMP);
     const distRange = (MAX_DIST - MIN_DIST);
     
-    this.temperature = this.isHabitable ? _.random(MIN_HABIT_TEMP, MAX_HABIT_TEMP) : _.random(MIN_TEMP, MAX_TEMP);
-    this.dist = (((this.temperature - MIN_TEMP) * distRange) / tempRangle) + MIN_DIST;
+    this.temperature = this.isHabitable ? _.random(Planet.MIN_HABIT_TEMP, Planet.MAX_HABIT_TEMP) : _.random(Planet.MIN_TEMP, Planet.MAX_TEMP);
+    this.dist = (((this.temperature - Planet.MIN_TEMP) * distRange) / tempRangle) + MIN_DIST;
     this.type = this._generateType();
     this.color = this._generateColor();
     this.size = this._generateSize();

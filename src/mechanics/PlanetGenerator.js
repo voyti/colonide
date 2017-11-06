@@ -10,25 +10,34 @@ export default class PlanetGenerator {
     'Rawiri', 'Pihopa', 'Rawiri', 'Taimona', 'Urepo', 'Petera', 'Waiara', 'Tipene', 
     'Rongo', 'Nepe', 'Tahiwai', 'Raharuhi', 'Eraka', 'Tipene'];
     
-    this.PLANET_BOX_MARGIN = 25; // the closer to half of box size, the more orderly the planets will be organized
+    this.PLANET_BOX_MARGIN = 35; // the closer to half of box size, the more orderly the planets will be organized
   }
   
   generate(number) {
     const planets = [];
-    _.times(number, (i) => planets.push(this._getSingle(...this._getPlanetCoords(number, i))));
+    const existingNames = [];
+    const surelyHabitableIdx = _.random(0, number); // ensure at least one habitable
+
+    _.times(number, (i) => {
+      const name = this._getName(existingNames);
+      const isHabitable = (i === surelyHabitableIdx) || _.random(0, 5) >= 4;
+      
+      planets.push(this._getSingle(name, isHabitable, ...this._getPlanetCoords(number, i)));
+      existingNames.push(name);
+    });
     return planets;
   }
   
-  _getSingle(x, y) {
-    const isHabitable = _.random(0, 5) >= 4;
+  _getSingle(name, isHabitable, x, y) {
     const potential = _.random(0, 10);
     const resourcesLevel = _.random(0, 10);
     
-    return new Planet(this._getName(), isHabitable, potential, resourcesLevel, x, y);
+    return new Planet(name, isHabitable, potential, resourcesLevel, x, y);
   }
   
-  _getName() {
-    return `${_.sample(this.BASE_NAMES)}-${_.random(1,9)}`; 
+  _getName(existingNames = []) {
+    const nameCandidate = `${_.sample(this.BASE_NAMES)}-${_.random(1,9)}`; 
+    return _.includes(existingNames, nameCandidate) ? this._getName(existingNames) : nameCandidate;
   }
   
   _getPlanetCoords(totalCount, i) {

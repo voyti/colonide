@@ -4,7 +4,7 @@ export default class LodashMixinsManager {
   
   static _primeFactor(n) {
     let i = 2;
-    while (i <= n){
+    while (i <= n) {
       if (n%i == 0){
           n /= i;    
       } else {
