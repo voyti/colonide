@@ -43,13 +43,13 @@ export default class Planet {
     this.color = this._generateColor();
     this.size = this._generateSize();
     
-    console.warn('------------------------');
-    console.warn('Planet ', this.name);
-    console.warn('temperature ', this.temperature);
-    console.warn('dist', this.dist);
-    console.warn('type', this.type);
-    console.warn('color', this.color);
-    console.warn('size', this.size);
+    // console.warn('------------------------');
+    // console.warn('Planet ', this.name);
+    // console.warn('temperature ', this.temperature);
+    // console.warn('dist', this.dist);
+    // console.warn('type', this.type);
+    // console.warn('color', this.color);
+    // console.warn('size', this.size);
   }
   
   setX(x){

@@ -1,5 +1,4 @@
 rm -rf ./dist/
-babel src -d dist -s
-ln -sf ./node_modules ./dist/
-cp -R src/index.html dist/index.html
+# webpack --progress --colors --display-error-details
+webpack --progress --colors
 cp -R src/resources dist/resources
