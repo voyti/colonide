@@ -1,3 +1,19 @@
-<div class="planet-panel-container">
+<div class="planet-panel-container"
+  ng-if="planetPanel.planetData"
+  ng-class="[planetPanel.getPlanetClass(), planetPanel.getSideAlign(),  planetPanel.planetData.drawingData.img.color]">
+  <div class="title-panel">
+    <img ng-src="{{'/resources/planets/backgrounds/' + planetPanel.planetData.drawingData.theme.background}}" alt="Planet bg"></img>
+    <h1>{{planetPanel.planetData.name}}</h1>
+    <h3>{{planetPanel.planetData.type}}</h3>
+  </div>
+  
+  <div class="info-panel">
+    <p>Temperature: {{planetPanel.planetData.temperature}}℃</p>
+    <p>Distance to nearest star: {{planetPanel.planetData.dist}} AU</p>
+    <p>Size (diameter): {{planetPanel.planetData.size | number:0}} km</p>
+    <p ng-class="{'habitable': planetPanel.planetData.isHabitable}">
+      Habitable: {{planetPanel.planetData.isHabitable ? 'Yes' : 'No' }}
+    </p>
+  </div>
   
 </div>

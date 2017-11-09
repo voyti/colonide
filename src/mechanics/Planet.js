@@ -26,8 +26,9 @@ export default class Planet {
     return -234;
   }
   
-  setDrawingData(planetImg, planetSprite) {
-    this.drawingData.img = planetImg;
+  setDrawingData(planetTheme, planetSprite) {
+    this.drawingData.theme = planetTheme;
+    this.drawingData.theme.background = _.sample(planetTheme.backgrounds);
     this.drawingData.sprite = planetSprite;
   }
   
@@ -39,17 +40,11 @@ export default class Planet {
     
     this.temperature = this.isHabitable ? _.random(Planet.MIN_HABIT_TEMP, Planet.MAX_HABIT_TEMP) : _.random(Planet.MIN_TEMP, Planet.MAX_TEMP);
     this.dist = (((this.temperature - Planet.MIN_TEMP) * distRange) / tempRangle) + MIN_DIST;
+    this.dist = _.round(this.dist, 2);
     this.type = this._generateType();
     this.color = this._generateColor();
     this.size = this._generateSize();
-    
-    // console.warn('------------------------');
-    // console.warn('Planet ', this.name);
-    // console.warn('temperature ', this.temperature);
-    // console.warn('dist', this.dist);
-    // console.warn('type', this.type);
-    // console.warn('color', this.color);
-    // console.warn('size', this.size);
+
   }
   
   setX(x){

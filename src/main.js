@@ -1,13 +1,7 @@
 /* global Phaser, _ */
 import 'phaser-shim';
-// import PIXI from 'pixi.js';
-// import 'phaser/src/pixi/utils/CanvasPool';
-// import 'phaser/src/pixi/utils/EarCut';
-// import 'phaser/src/pixi/utils/EventTarget';
-// import 'phaser/src/pixi/utils/Utils';
-// import p2 from 'p2';
-// import Phaser from 'phaser';
-import angularIndex from './angularIndex';
+import angularIndex from './ui/angularIndex';
+import 'ui/_ui.module.js';
 import _ from 'lodash';
 
 import GameConstants from './GameConstants';

@@ -1,0 +1,72 @@
+@import 'src/ui/_variables.scss';
+
+.planet-panel-container {
+  width: 440px;
+  height: 100%;
+  color: white;
+  position: absolute;
+  
+  &.ice-giant {
+    background-color: $color-ocean-blue-2;
+    .info-panel {
+      background-color: $color-ocean-blue-4;
+    }
+  }
+  
+  &.helium-planet {
+    background-color: $color-navy-blue-1;
+    .info-panel {
+      background-color: $color-navy-blue-4;
+    }
+  }
+  
+  &.gas-giant {
+    background-color: $color-whiskey-0;
+    .info-panel {
+      background-color: $color-whiskey-4;
+    }
+  }
+  
+  &.ocean-planet {
+    background-color: $color-ocean-blue-0;
+    .info-panel {
+      background-color: $color-ocean-blue-4;
+    }
+  }  
+  
+  &.terrestrial-planet {
+    background-color: $color-green-2;
+    .info-panel {
+      background-color: $color-green-4;
+    }
+  }
+  
+  &.align-right {
+    right: 0;
+  }
+  
+  .title-panel {
+    text-shadow: 2px 2px 0 $color-grey;
+    
+    > h1 {
+      position: absolute;
+      top: 110px;
+      margin-left: 12px;
+      text-shadow: 2px 2px 0 $color-grey;
+    }
+    
+    h3 {
+      margin: 4px;
+      margin-left: 12px;
+    }
+    
+    > img {
+      width: 100%;
+      height: 170px;
+    }
+  }
+  
+  .info-panel {
+    padding: 12px;
+  }
+}

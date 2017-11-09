@@ -1,22 +1,26 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 
-// var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/');
-// var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
-// var pixi = path.join(phaserModule, 'build/custom/pixi.js');
-// var p2 = path.join(phaserModule, 'build/custom/p2.js');
-
 module.exports = {
     entry: "./src/main.js",
     output: {
         path: __dirname + '/dist',
         filename: "bundle.js"
     },
-    devtool: 'eval',
+    devtool: 'source-map',
     module: {
       loaders: [
         { loader: 'script-loader', test: /(pixi|phaser).js/ },
-        { test: /\.css$/, loader: "style!css" },
+        {
+            test: /\.scss$/,
+            use: [{
+                loader: "style-loader" // creates style nodes from JS strings
+            }, {
+                loader: "css-loader" // translates CSS into CommonJS
+            }, {
+                loader: "sass-loader" // compiles Sass to CSS
+            }]
+        },
         {
           test: /\.js$/,
           exclude: /(node_modules)/,

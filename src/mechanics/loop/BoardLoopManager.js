@@ -1,6 +1,5 @@
 /* global _ */
 
-// import PlanetDrawer from '../drawing/PlanetDrawer';
 const planetTextElements = new Map();
 const WHITE = '#fff';
 const LIGHT_ORANGE = '#f8bc7e';
@@ -26,10 +25,7 @@ export default class BoardLoopManager {
         
       } else if (sprite && text) {
         const textTween = game.add.tween(text).to( { alpha: 0 }, 100, Phaser.Easing.Default, true);
-        textTween.onComplete.add((text) => {
-          text.destroy(); 
-          // planetTextElements.set(planet.name, null);
-        });
+        textTween.onComplete.add((text) => text.destroy());
       }
     })
   }

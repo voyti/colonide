@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'junctionlight';
+    src: url('Junction-light-webfont.eot');
+    src: url('Junction-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Junction-light-webfont.woff2') format('woff2'),
+         url('Junction-light-webfont.woff') format('woff'),
+         url('Junction-light-webfont.ttf') format('truetype'),
+         url('Junction-light-webfont.svg#junctionlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+

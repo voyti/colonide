@@ -1,9 +1,9 @@
 export default class GameConstants {
   static get WIDTH() {
-    return 800;
+    return 1280;
   }
   
   static get HEIGHT() {
-    return 600;
+    return 720;
   }
 }
