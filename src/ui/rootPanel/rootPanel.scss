@@ -1,3 +1,5 @@
+@import 'node_modules/reset-css/_reset';
+
 @font-face {
     font-family: "Junction";
     src: url("/resources/web fonts/junction_regular_macroman/Junction-regular-webfont.woff");
@@ -8,6 +10,22 @@
     font-family: "AUdimat";
     src: url("/resources/web fonts/audimat_OT/AUdimat-Regular.otf");
     font-weight: 500;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  padding: 6px;
 }
 
 .root-panel-container {

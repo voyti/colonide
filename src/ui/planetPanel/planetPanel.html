@@ -16,4 +16,12 @@
     </p>
   </div>
   
+    
+  <div class="actions-panel">
+    <div ng-if="planetPanel.planetData.state === 'uncolonized' && planetPanel.planetData.isHabitable">
+      <div class="colonize-button">
+        <img src="/resources/icons/colonize-icon.png"></img>Colonize</div>
+    </div>
+  </div>
+  
 </div>

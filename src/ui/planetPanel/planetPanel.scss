@@ -5,38 +5,39 @@
   height: 100%;
   color: white;
   position: absolute;
+  pointer-events: auto;
   
   &.ice-giant {
     background-color: $color-ocean-blue-2;
-    .info-panel {
+    .info-panel, .actions-panel {
       background-color: $color-ocean-blue-4;
     }
   }
   
   &.helium-planet {
     background-color: $color-navy-blue-1;
-    .info-panel {
+    .info-panel, .actions-panel {
       background-color: $color-navy-blue-4;
     }
   }
   
   &.gas-giant {
     background-color: $color-whiskey-0;
-    .info-panel {
+    .info-panel, .actions-panel {
       background-color: $color-whiskey-4;
     }
   }
   
   &.ocean-planet {
     background-color: $color-ocean-blue-0;
-    .info-panel {
+    .info-panel, .actions-panel {
       background-color: $color-ocean-blue-4;
     }
   }  
   
   &.terrestrial-planet {
     background-color: $color-green-2;
-    .info-panel {
+    .info-panel, .actions-panel {
       background-color: $color-green-4;
     }
   }
@@ -66,7 +67,42 @@
     }
   }
   
-  .info-panel {
+  .info-panel, .actions-panel {
     padding: 12px;
   }
+  
+  .actions-panel {
+    margin-top: 24px;
+
+    .colonize-button {
+      width: 300px;
+      height: 40px;
+      position: relative;
+      background-color: $color-navy-blue-3;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 28px;
+      padding-top: 14px;
+      cursor: pointer;
+      border: 1px solid $color-navy-blue-2;
+      
+      img {
+        width: 32px;
+        position: absolute;
+        left: 62px;
+        top: 8px;
+      }
+      
+      &:hover {
+        color: darken(white, 2%);
+        background-color: darken($color-navy-blue-3, 2%);
+      }
+      
+      &:active {
+        color: darken(white, 5%);
+        background-color: darken($color-navy-blue-3, 5%);
+      }
+    }
+  }
+  
 }

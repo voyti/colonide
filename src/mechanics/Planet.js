@@ -1,7 +1,7 @@
 /* global _ */
 export default class Planet {
   
-  constructor(name, isHabitable, potential, resourcesLevel, x, y) {
+  constructor(name, isHabitable, potential, resourcesLevel, x, y, isColonized = false) {
     this.name = name;
     this.isHabitable = isHabitable;
     this.potential = potential;
@@ -9,6 +9,7 @@ export default class Planet {
     this.drawingData = {};
     this.x = x;
     this.y = y;
+    this.state = 'uncolonized';
 
     this._generateInfo();
   }

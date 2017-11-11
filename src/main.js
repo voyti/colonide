@@ -4,13 +4,14 @@ import angularIndex from './ui/angularIndex';
 import 'ui/_ui.module.js';
 import _ from 'lodash';
 
-import GameConstants from './GameConstants';
-import LodashMixinsManager from './LodashMixinsManager';
+import GameConstants from 'GameConstants';
+import LodashMixinsManager from 'LodashMixinsManager';
+import GameStateInterface from 'GameStateInterface';
 import PlanetGenerator from './mechanics/PlanetGenerator.js';
 import MapGenerator from './mechanics/MapGenerator.js';
 import BoardLoopManager from './mechanics/loop/BoardLoopManager.js';
 import LoadingManager from './loader/LoadingManager';
-
+import Player from './mechanics/Player';
 
 LodashMixinsManager.loadMixins();
 const game = new Phaser.Game(GameConstants.WIDTH, GameConstants.HEIGHT, Phaser.AUTO, '', { preload, create, update });
@@ -29,6 +30,9 @@ function create() {
     overContainer.planets = planets;
     
     (new MapGenerator).generateMap(planets, game);
+    
+    Player.getInstance();
+    GameStateInterface.getInstance().initialize(game);
 }
 
 function update() {
