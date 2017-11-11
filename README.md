@@ -1,5 +1,5 @@
 # colonide
-![image](https://user-images.githubusercontent.com/6819634/32584529-0612a18a-c4f9-11e7-933d-22c9886f7fdc.png)
+![image](https://user-images.githubusercontent.com/6819634/32685398-6af36808-c690-11e7-902a-e3b5a1b7d200.png)
 
 Using Phaser - HTML5 Game Framework:
 
