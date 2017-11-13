@@ -6,23 +6,6 @@
   color: white;
   position: absolute;
   pointer-events: auto;
-  right: -440px;
-  transition: transform 1s;
-  
-  &.opening {
-      transform: translateX(-440px);
-  }
-  
-  .panel-close-button {
-    position: absolute;
-    cursor: pointer;
-    right: 2px;
-    top: 2px;
-    color: white;
-    z-index: 1;
-    // background: url(/resources/icons/cancel.png) no-repeat;
-    // background-size: contain;
-  }
   
   $planet-types: ice-giant, helium-planet, gas-giant, 
   ocean-planet, terrestrial-planet;
@@ -82,6 +65,14 @@
     margin-top: 24px;
 
     .colonize-button {
+      position: relative;
+
+      img {
+        width: 32px;
+        position: absolute;
+        left: 62px;
+        top: 8px;
+      }
       
       &:hover {
         color: darken(white, 2%);
@@ -124,8 +115,7 @@
     }
   }
   
-  .planet-action-button {
-    position: relative;
+  .colonize-button {
     width: 300px;
     height: 40px;
     background-color: $color-navy-blue-3;
@@ -135,18 +125,6 @@
     padding-top: 14px;
     cursor: pointer;
     border: 1px solid $color-navy-blue-2;
-    
-    &.disabled {
-      background-color: $color-light-grey;
-      cursor: default;
-    }
-    
-    img {
-      width: 32px;
-      position: absolute;
-      left: 62px;
-      top: 8px;
-    }
   }
   
   .debug-panel {

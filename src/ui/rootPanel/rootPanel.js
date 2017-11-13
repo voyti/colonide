@@ -15,6 +15,8 @@ export default class RootPanel {
     }
 }
 
+// only component listening to global events and passing the data to underlaying components
+// thus interfacing 
 class RootPanelController {
     constructor($rootScope) {
       'ngInject';
@@ -23,9 +25,13 @@ class RootPanelController {
       this.height = `${GameConstants.HEIGHT}px`;
       this.width = `${GameConstants.WIDTH}px`;
       
-      EventDispatchInterface.on('planet-selected', (planetData) => {
-        this.selectedPlanet = planetData;
-        console.log(planetData);
+      EventDispatchInterface.on('planet-selected', ({ planet }) => {
+        this.selectedPlanet = planet;
+        this.onExternalDataUpdate();
+      });      
+      
+      EventDispatchInterface.on('planet-colonized', ({ planet }) => {
+        this.selectedPlanet = planet;
         this.onExternalDataUpdate();
       });
     }

@@ -137,6 +137,6 @@ export default class PlanetDrawer {
   }
   
   _onPlanetClicked(planet) {
-    EventDispatchInterface.emit('planet-selected', planet);
+    EventDispatchInterface.emit('planet-selected', { planet });
   }
 }

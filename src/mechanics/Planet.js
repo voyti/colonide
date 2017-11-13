@@ -56,6 +56,14 @@ export default class Planet {
     this.y = y;
   }
   
+  setState(state) {
+    this.state = state;
+  }
+  
+  checkState(checkedState) {
+    return this.state === checkedState;
+  }
+  
   _generateType() {
     if (this.isHabitable) {
       return 'Terrestrial planet';

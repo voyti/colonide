@@ -1,5 +1,6 @@
 /* global Phaser, _ */
 import 'phaser-shim';
+import 'angular-tooltips';
 import angularIndex from './ui/angularIndex';
 import 'ui/_ui.module.js';
 import _ from 'lodash';

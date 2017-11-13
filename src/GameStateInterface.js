@@ -54,6 +54,7 @@ export default class GameStateInterface {
   }
   
   setState(state) {
+    console.info('GAME STATE CHANGED TO ', state, ' FROM ', this.state);
     this.state = state;
   }
   

@@ -1,4 +1,5 @@
 @import 'node_modules/reset-css/_reset';
+@import 'node_modules/angular-tooltips/dist/angular-tooltips.min';
 
 @font-face {
     font-family: "Junction";
@@ -32,4 +33,13 @@ p {
   font-family: "AUdimat", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   position: absolute;
   pointer-events: none;
+  overflow: hidden;
+  
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
 }
