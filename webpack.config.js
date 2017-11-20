@@ -4,10 +4,15 @@ var path = require('path');
 module.exports = {
     entry: "./src/main.js",
     output: {
-        path: __dirname + '/dist',
+        path: path.join(__dirname, "dist"),
         filename: "bundle.js"
     },
     devtool: 'source-map',
+    devServer: {
+      port: 8080,
+      disableHostCheck: true,
+      contentBase: path.join(__dirname, "dist"),
+    },
     module: {
       loaders: [
         { loader: 'script-loader', test: /(pixi|phaser).js/ },

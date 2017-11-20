@@ -1,27 +1,18 @@
 @import 'src/ui/_variables.scss';
 
+$panel-width: 440px;
+
 .planet-panel-container {
-  width: 440px;
+  width: $panel-width;
   height: 100%;
   color: white;
   position: absolute;
   pointer-events: auto;
-  right: -440px;
+  right: -$panel-width;
   transition: transform 1s;
-  
+
   &.opening {
-      transform: translateX(-440px);
-  }
-  
-  .panel-close-button {
-    position: absolute;
-    cursor: pointer;
-    right: 2px;
-    top: 2px;
-    color: white;
-    z-index: 1;
-    // background: url(/resources/icons/cancel.png) no-repeat;
-    // background-size: contain;
+      transform: translateX(-$panel-width);
   }
   
   $planet-types: ice-giant, helium-planet, gas-giant, 
@@ -68,9 +59,26 @@
       margin-left: 12px;
     }
     
-    > img {
+    img.title-background {
       width: 100%;
       height: 170px;
+    }
+    
+    img.colonized-icon {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+    
+    .panel-close-button {
+      position: absolute;
+      cursor: pointer;
+      right: 2px;
+      top: 2px;
+      color: white;
+      z-index: 1;
     }
   }
   
@@ -124,7 +132,11 @@
     }
   }
   
-  .planet-action-button {
+  .button-wrapper + .button-wrapper {
+    margin-top: 12px;
+  }
+  
+  div.planet-action-button {
     position: relative;
     width: 300px;
     height: 40px;
@@ -139,11 +151,19 @@
     &.disabled {
       background-color: $color-light-grey;
       cursor: default;
+      
+      &:hover {
+        color: darken(white, 2%);
+        background-color: darken($color-light-grey, 2%);
+      }
+      
+      &:active {
+        color: darken(white, 5%);
+        background-color: darken($color-light-grey, 5%);
+      }
     }
     
-    img {
-      width: 32px;
-      position: absolute;
+    img.medium-icon {
       left: 62px;
       top: 8px;
     }

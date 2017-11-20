@@ -43,3 +43,8 @@ p {
           user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome and Opera */
 }
+
+img.medium-icon {
+  width: 42px;
+  position: absolute;
+}

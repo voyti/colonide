@@ -3,10 +3,23 @@
   ng-class=
     "[planetPanel.getPlanetClass(), planetPanel.getSideAlign(),  planetPanel.planet.drawingData.img.color, planetPanel.getPanelState()]">
   
-  <div class="panel-close-button" ng-click="planetPanel.closePanel()">x</div>
-  
   <div class="title-panel">
-    <img ng-src="{{'/resources/planets/backgrounds/' + planetPanel.planet.drawingData.theme.background}}" alt="Planet bg"></img>
+    <img 
+      class="colonized-icon"
+      title="Planet colonized"
+      ng-show="planetPanel.isPlanetColonized()"
+      ng-src="/resources/icons/home.png">
+    </img>
+    
+    <div class="panel-close-button" ng-click="planetPanel.closePanel()">x</div>
+    
+    <img 
+      class="title-background"
+      ng-repeat="bg in planetPanel.allBackgrounds"
+      ng-show="planetPanel.planet.drawingData.theme.background === bg"
+      ng-src="{{'/resources/planets/backgrounds/' + bg}}" alt="Planet bg">
+    </img>    
+      
     <h1>{{planetPanel.planet.name}}</h1>
     <h3>{{planetPanel.planet.type}}</h3>
   </div>
@@ -19,36 +32,13 @@
       Habitable: {{planetPanel.planet.isHabitable ? 'Yes' : 'No' }}
     </p>
   </div>
-  
     
   <div class="actions-panel">
-    <div ng-if="planetPanel.isPlanetColonizable()">
-      
-      <div ng-if="!planetPanel.colonizationStarted" 
-        class="colonize-button planet-action-button" 
-        ng-click="planetPanel.beginColonization()">
-        <img src="/resources/icons/colonize-icon.png">Colonize
-      </div>
-      
-      <div ng-if="planetPanel.colonizationStarted" class="colonize-progress">
-        <span>Colonizing...</span>
-        <div class="colonize-progress-bar"></div>
-      </div>
 
-    </div>
-    
-    <div ng-if="!planetPanel.planet.isHabitable">
-        <div class="planet-action-button"
-          ng-attr-tooltips="{{!planetPanel.isPlanetExtractable()}}" 
-          ng-attr-tooltip-template="{{!planetPanel.isPlanetExtractable() ? 'You need to build Extractors first!' : ''}}"
-          ng-class="{ disabled: !planetPanel.isPlanetExtractable() }">
-          <img src="/resources/icons/extract-icon.png">Extract
-        </div>
-    </div>
+    <ng-include src="planetPanel.habitableUrl"></ng-include>
+    <ng-include src="planetPanel.nonHabitableUrl"></ng-include>
+    <ng-include src="planetPanel.colonizedUrl"></ng-include>
 
-    <div ng-if="planetPanel.isPlanetColonized()">
-      <planet-actions-panel planet="planetPanel.planet"></planet-actions-panel>
-    </div>
   </div>
   
   <div ng-show="planetPanel.debugMode" class="debug-panel">
@@ -57,6 +47,4 @@
       <p> planetPanel.colonizationStarted: {{ planetPanel.colonizationStarted }} </p>
       <p> planetPanel.checkGameState('initial'): {{ planetPanel.checkGameState('initial') }} </p>
   </div>
-  
-  
 </div>

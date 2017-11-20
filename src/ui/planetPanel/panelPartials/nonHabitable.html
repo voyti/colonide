@@ -1,0 +1,24 @@
+<div ng-if="!planetPanel.planet.isHabitable">
+  
+  <div class="button-wrapper">
+    <div class="planet-action-button"
+      ng-click="planetPanel.onScanClick()"
+      ng-attr-tooltips="{{!planetPanel.isPlanetScanable()}}" 
+      ng-attr-tooltip-template="{{!planetPanel.isPlanetScanable() ? 'You need to build Long Range Scanner first!' : ''}}"
+      ng-class="{ disabled: !planetPanel.isPlanetScanable() }">
+      <img class="medium-icon" src="/resources/icons/scan-icon.png">Scan
+    </div>
+  </div>
+
+  <div class="button-wrapper">
+    <div class="planet-action-button"
+      ng-click="planetPanel.onExtractionClick()"
+      ng-attr-tooltips="{{!planetPanel.isPlanetExtractable()}}" 
+      ng-attr-tooltip-template="{{!planetPanel.isPlanetExtractable() ? 'You need to build Extractors first!' : ''}}"
+      ng-class="{ disabled: !planetPanel.isPlanetExtractable() }">
+      <img class="medium-icon" src="/resources/icons/extract-icon.png">Extract
+    </div>  
+  </div>
+
+    
+</div>

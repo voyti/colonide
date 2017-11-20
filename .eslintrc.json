@@ -1,12 +1,11 @@
 {
-    "env": {
+   "env": {
       "es6": true,
     },
     
     "parserOptions": {
         "ecmaVersion": 6,
     },
-    
     "rules": {
       // enforces getter/setter pairs in objects
       'accessor-pairs': 0,
@@ -123,8 +122,6 @@
       'comma-dangle': [2, 'always-multiline'],
       // disallow assignment in conditional expressions
       'no-cond-assign': [2, 'always'],
-      // disallow use of console
-      'no-console': 1,
       // disallow use of constant expressions in conditions
       'no-constant-condition': 1,
       // disallow control characters in regular expressions
@@ -177,5 +174,5 @@
       'no-unexpected-multiline': 0,
     },
     //"extends": "defaults/configurations/walmart/es6-browser",
-    //"extends": "eslint:recommended",
+    // "extends": "eslint:recommended"
 }

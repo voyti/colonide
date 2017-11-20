@@ -1,9 +1,15 @@
+import _ from 'lodash';
 import templateUrl from './planetPanel.html';
+import habitableUrl from './panelPartials/habitable.html';
+import nonHabitableUrl from './panelPartials/nonHabitable.html';
+import colonizedUrl from './panelPartials/colonized.html';
 import './planetPanel.scss';
 import GameConstants from 'GameConstants';
 import GameStateInterface from 'GameStateInterface';
 import EventDispatchInterface from 'EventDispatchInterface';
 import Player from 'mechanics/Player';
+import PlanetDrawer from 'drawing/PlanetDrawer';
+import SoundManager from 'sounds/SoundManager';
 
 export default class PlanetPanel {
     constructor() {
@@ -18,26 +24,26 @@ export default class PlanetPanel {
 }
 
 class PlanetPanelController {
-    constructor($timeout) {
+    constructor($timeout, $scope) {
       'ngInject';
       this.$timeout = $timeout;
       this.GameStateInterface = GameStateInterface.getInstance();
       this.Player = Player.getInstance();
+      this.SoundManager = SoundManager.getInstance();
       this.colonizationStarted = false;
       this.debugMode = false;
       this.isOpening = false;
       this.isClosing = false;
-    }
-    
-    $onChanges(changes) {
-      console.warn(changes);
-      // if a planet is selected first time or different planet is selected
-      if (changes.planet && 
-        (!changes.planet.previousValue ||
-        _.get(changes.planet, 'previousValue.name') !== _.get(changes.planet, 'currentValue.name'))) {
+      this.allBackgrounds = PlanetDrawer.getAllBackgrounds();
+      
+      this.habitableUrl = habitableUrl;
+      this.nonHabitableUrl = nonHabitableUrl;
+      this.colonizedUrl = colonizedUrl;
+      
+      $scope.$on('planet-selected', () => {
         this.isOpening = true;
         this.isClosing = false;
-      }
+      });
     }
     
     getPanelState() {
@@ -51,6 +57,7 @@ class PlanetPanelController {
     closePanel() {
       this.isOpening = false;
       this.isClosing = true;
+      this.SoundManager.play('ui_click');
     }
     
     getPlanetClass() {
@@ -63,18 +70,43 @@ class PlanetPanelController {
       }
     }
     
+    onColonizationClick() {
+      if (!this.isPlanetColonizable()) {
+        this.SoundManager.play('ui_click_disabled');
+      } else {
+        this.SoundManager.play('ui_click');
+        this.beginColonization();
+      }
+    }
+    
     isPlanetColonizable() {
-      return this.planet.checkState('uncolonized') 
+      return this.planet && this.planet.checkState('uncolonized') 
       && this.planet.isHabitable
       && this.Player.isPlayerEligibleToColonize();
     }
     
     isPlanetColonized() {
-      return this.planet.checkState('colonized');
+      return this.planet && this.planet.checkState('colonized');
+    }
+    
+    onExtractionClick() {
+      if (!this.isPlanetExtractable()) {
+        this.SoundManager.play('ui_click_disabled');
+      }
     }
     
     isPlanetExtractable() {
       return this.Player.isPlayerEligibleToExtract();
+    }  
+    
+    isPlanetScanable() {
+      return this.Player.isPlayerEligibleToScan();
+    }
+    
+    onScanClick() {
+      if (!this.isPlanetScanable()) {
+        this.SoundManager.play('ui_click_disabled');
+      }
     }
 
     checkGameState(stateChecked) {
@@ -83,6 +115,7 @@ class PlanetPanelController {
     
     beginColonization() {
       EventDispatchInterface.emit('planet-colonization-started', { planet: this.planet });
+      this.SoundManager.play('colonize_progress');
       this.colonizationStarted = true;
       
       this.$timeout(() => {

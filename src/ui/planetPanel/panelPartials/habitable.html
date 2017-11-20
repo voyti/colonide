@@ -1,0 +1,29 @@
+<div ng-if="planetPanel.planet.isHabitable">
+  
+  <!--CAN COLONIZE - ALL PREREQUIREMENTS MET-->
+  <div ng-if="planetPanel.isPlanetColonizable()">
+  
+    <div ng-if="!planetPanel.colonizationStarted" 
+      class="colonize-button planet-action-button" 
+      ng-click="planetPanel.onColonizationClick()">
+      <img class="medium-icon" src="/resources/icons/colonize-icon.png">Colonize
+    </div>
+    
+    <div ng-if="planetPanel.colonizationStarted" class="colonize-progress">
+      <span>Colonizing...</span>
+      <div class="colonize-progress-bar"></div>
+    </div>
+  </div>
+  
+  <!--CAN'T COLONIZE-->
+  <div ng-if="!planetPanel.isPlanetColonizable() && !planetPanel.isPlanetColonized()">
+    <div
+      class="colonize-button planet-action-button disabled" 
+      tooltips tooltip-template="You need to build Colonizer first!"
+      ng-click="planetPanel.onColonizationClick()">
+      <img class="medium-icon" src="/resources/icons/colonize-icon.png">Colonize
+    </div>
+  </div>
+
+
+</div>

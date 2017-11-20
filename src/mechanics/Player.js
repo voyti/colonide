@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import GameStateInterface from 'GameStateInterface';
 
 let instance = null;
@@ -19,6 +20,10 @@ export default class Player {
   
   isPlayerEligibleToExtract() {
     return _.get(this.inventory.ships, 'extractors.length');
+  }  
+  
+  isPlayerEligibleToScan() {
+    return _.get(this.inventory.buildings, ['id', 'long_range_scanner']);
   }
   
   _getDefaultInventory() {

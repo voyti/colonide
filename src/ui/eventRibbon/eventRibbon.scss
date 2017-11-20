@@ -1,0 +1,61 @@
+@import 'src/ui/_variables.scss';
+
+$ribbon-height: 100px;
+
+.event-ribbon-container {  
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: white;
+  
+  .event-text {
+    position: absolute;
+    width: 100%;
+    height: $ribbon-height;
+    top: calc(100% + #{$ribbon-height});
+    opacity: 0;
+    font-size: 34px;
+    z-index: 110;
+    text-align: center;
+
+    &.animated {
+      animation-name: text-anim;
+      animation-duration: 3s;
+    }
+    
+    img.medium-icon {
+      left: 40%;
+    }
+  }
+
+  .ribbon {
+    position: absolute;
+    top: -$ribbon-height;
+    opacity: 0;
+    width: 100%;
+    height: $ribbon-height;
+    background-color: $color-green-3;
+    z-index: 100;
+
+    &.animated {
+      animation-name: ribbon-anim;
+      animation-duration: 3s;
+    }
+  }
+  
+  @keyframes ribbon-anim {
+      0%   { opacity: 0; top: -$ribbon-height; }
+      25%  { opacity: 1; top: 40%; }
+      75%  { opacity: 1; top: 40% }
+      85%  { opacity: 0; }
+      100% { opacity: 0; top: calc(100% + #{$ribbon-height}); }
+  } 
+  
+  @keyframes text-anim {
+      0%   { opacity: 0; top: calc(100% + #{$ribbon-height}); }
+      25%  { opacity: 1; top: calc(40% + 10px); }
+      75%  { opacity: 1; top: calc(40% + 10px); }
+      85%  { opacity: 0; }
+      100% { opacity: 0; top: -$ribbon-height; }
+  }
+}

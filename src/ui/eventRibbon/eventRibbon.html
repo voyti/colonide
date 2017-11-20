@@ -1,0 +1,10 @@
+<div class="event-ribbon-container">
+  <div class="event-text" ng-class="{ animated: ribbon.isDuringAnimation }">
+    Planet colonized
+    <div>
+      <img class="medium-icon" ng-src="{{ribbon.planetUrl}}">
+    {{ribbon.planet.name}}
+    </div>
+  </div>
+  <div class="ribbon" ng-class="{ animated: ribbon.isDuringAnimation }"></div>
+</div>

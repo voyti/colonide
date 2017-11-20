@@ -22,6 +22,7 @@ export default class GameStateInterface {
       this.time = game.time;
       this.initializedAt = game.time.time;
     }
+    return GameStateInterface.getInstance();
   }
   
   isInitialized() {
@@ -47,7 +48,7 @@ export default class GameStateInterface {
   
   getState() {
     return this.state;
-  } 
+  }
   
   checkState(state) {
     return this.state === state;
