@@ -37,8 +37,10 @@ function create() {
     
     (new MapGenerator).generateMap(planets, game);
     // soundManager.play('game_start');
+    LoadingManager.deferredLoadMusic(game);
+    setTimeout(() => soundManager.play('music_upbeat_1'), 10000);
 }
 
 function update() {
-    BoardLoopManager.doLoop(game, overContainer.planets);
+  BoardLoopManager.doLoop(game, overContainer.planets);
 }

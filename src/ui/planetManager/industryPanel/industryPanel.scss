@@ -1,0 +1,138 @@
+@import 'src/ui/_variables.scss';
+
+$slot-width: 38px;
+$slot-height: 32px;
+$INDUSTRY_CLICK_TIMEOUT: 1s;
+
+.industry-panel-container {
+  .industry-icon-button {
+    display: inline-block;
+    &.industry-cooldown {
+      > img {
+        animation: industryCooldown $INDUSTRY_CLICK_TIMEOUT ease-in;
+      }
+    }
+    
+    > img {
+      width: 120px;
+      transform: scale(0.8);
+      cursor: pointer;
+      transition: transform 0.5s;
+      
+      &:hover {
+        transform: scale(0.9);
+      }
+    }
+  }
+  
+  .slot-reflection {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background-color: white;
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  
+  .industry-controls-container {
+    display: inline-block;
+    position: relative;
+    top: -15px;
+
+    span {
+      position: absolute;
+      bottom: 4px;
+      left: 40%;
+      font-size: 26px;
+      font-weight: bold;
+      -webkit-text-stroke: #333;
+      -webkit-text-stroke-width: 1.3px;
+    }
+    
+    .industry-progress {
+      display: inline-block;
+      position: relative;
+
+      .progress-space {
+        display: inline-block;
+        height: $slot-height;
+        width: 200px;
+        background-color: $color-white;
+        opacity: 0.6;
+      }
+      
+      .mine-progress-made, .farm-progress-made {
+        display: inline-block;
+        position: absolute;
+        will-change: width;
+        transition: width 0.5s;
+        top: 0;
+        left: 0;
+        height: $slot-height;
+  
+      }
+      
+      .mine-progress-made {
+        background: url('/resources/backgrounds/mine-progress.png') repeat-x;
+        background-size: $slot-height;
+      }
+      
+      .farm-progress-made {
+        background: url('/resources/backgrounds/farm-progress.png') repeat-x;
+        background-size: $slot-height;
+      }
+    }
+  }
+
+  
+  .add-employee {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+    .employes-info {
+      position: absolute;
+      top: 12px;
+      left: 7px;
+      font-size: 22px;
+      font-weight: bold;
+      -webkit-text-stroke: #333;
+      -webkit-text-stroke-width: 1.2px;
+    }
+    
+    &:hover {
+      opacity: 0.8;
+    }
+    
+    img {
+      height: $slot-height;
+    }
+  }
+  
+  .tool-slot {
+    position: relative;
+    display: inline-block;
+    width: $slot-width;
+    height: $slot-height;
+    border: 1px solid $color-slight-grey-1;
+    background-color: $color-light-grey;
+    
+    > img {
+      position: absolute;
+      width: $slot-width;
+      height: $slot-height;
+      top: 0;
+      left: 0;
+      transform: scale(0.7);
+      opacity: 0.6;
+    }
+  }
+  
+}
+
+@keyframes industryCooldown {
+  from { opacity: 0; transform: scale(1.2); }
+  to { opacity: 1; transform: scale(0.9); }
+}

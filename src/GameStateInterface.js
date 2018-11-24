@@ -8,7 +8,7 @@ export default class GameStateInterface {
     
     this.MONTHS_IN_YEAR = 12;
     this.DAYS_IN_MONTH = 30;
-    this.MILLIS_PER_DAY = 1000;
+    this.MILLIS_PER_DAY = 2000;
   }
   
   static getInstance() {
@@ -42,8 +42,9 @@ export default class GameStateInterface {
     const extraFromMonths = extraFromYears % (this.MILLIS_PER_DAY * this.DAYS_IN_MONTH);
     
     const gameDays = Math.ceil(extraFromMonths / this.MILLIS_PER_DAY);
+    const totalDaysElapsed = Math.floor(elapsed / this.MILLIS_PER_DAY);
 
-    return { elapsed, gameYears, gameMonths, gameDays  };
+    return { elapsed, gameYears, gameMonths, gameDays, totalDaysElapsed };
   }
   
   getState() {

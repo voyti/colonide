@@ -123,6 +123,7 @@ class PlanetPanelController {
           this.GameStateInterface.setState('regular');
         }
         EventDispatchInterface.emit('planet-colonized', { planet: this.planet });
+        this.colonizationStarted = false;
       }, 5000);
     }
   }

@@ -6,9 +6,12 @@ export default class SoundManager {
       this.SOUND_EVENT_TO_AUDIO_LOOKUP = {
         'ui_click': 'thud',
         'ui_click_disabled': 'thud_bounce',
+        'farm_action': 'farm_action',
+        'mine_action': 'mine_action',
         
         'game_start': 'music_1',
         'game_random_music_1': 'music_1',
+        'music_upbeat_1': 'music_upbeat_1',
         
         'colonize_progress': 'colonize_progress',
         'colonize_done': 'upbeat_drums',

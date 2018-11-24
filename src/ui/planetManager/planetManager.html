@@ -1,0 +1,33 @@
+<div class="planet-manager-container">
+  <div class="management-tabs-select">
+
+    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'overview'}" ng-click="manager.openTab('overview')">
+      <img class="small-icon" src="/resources/icons/planet.png">Overview
+    </div>
+
+    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'storage'}" ng-click="manager.openTab('storage')">
+      <img class="small-icon" src="/resources/icons/crate.png">Storage
+    </div>
+
+    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'buildings'}" ng-click="manager.openTab('buildings')">
+      <img class="small-icon" src="/resources/icons/building.png">Buildings
+    </div>
+
+    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'fleet'}" ng-click="manager.openTab('fleet')">
+      <img class="small-icon" src="/resources/icons/ship.png">Fleet
+    </div>
+  </div>
+
+  <ng-include src="manager.overviewUrl" class="manager-tab" ng-show="manager.openedTab === 'overview'">
+  </ng-include>
+
+  <ng-include src="manager.storageUrl" class="manager-tab" ng-show="manager.openedTab === 'storage'">
+  </ng-include>
+
+  <ng-include src="manager.buildingsUrl" class="manager-tab" ng-show="manager.openedTab === 'buildings'">
+  </ng-include>
+
+  <ng-include src="manager.fleetUrl" class="manager-tab" ng-show="manager.openedTab === 'fleet'">
+  </ng-include>
+
+</div>

@@ -19,7 +19,7 @@ class RootPanelController {
       'ngInject';
       this.$rootScope = $rootScope;
       this.$scope = $scope;
-      
+
       this.height = `${GameConstants.HEIGHT}px`;
       this.width = `${GameConstants.WIDTH}px`;
       

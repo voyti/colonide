@@ -1,4 +1,44 @@
 /* global _ */
+
+/* Planet class. Should keep planet state and simple mechanics. 
+ * Advanced mechanics should be calculated using stateless PlanetService 
+ */
+import PlanetService from './PlanetService';
+import FoodService from './FoodService';
+import IndustryToolsService from './IndustryToolsService';
+
+const COLONIZED_PLANET_START_BUILDINGS = [
+  {
+    id: 'livingQuarters',
+    name: 'Living Quarters',
+    level: 1,
+  }, {
+    id: 'mine',
+    name: 'Mine',
+    level: 1,
+  }, {
+    id: 'farm',
+    name: 'Farm',
+    level: 1,
+  },
+];
+
+const OPPOSITE_INDUSTRY_MAP = {
+  mine: 'farm',
+  farm: 'mine',
+};
+
+const MINER_CONTRIBUTION_VALUE = 1;
+const FOOD_DEMAND_PER_EMPLOYEE = 30;
+const MINIMAL_EMPLOYEES_COUNT = 0;
+const EMPLOYEES_PER_QUARTERS_LEVEL_COUNT = 
+  { 1: 10, 2: 30, 3: 50, 4: 70, 5: 90,};
+  
+const EMPLOYEES_PER_BUILDING_LEVEL_COUNT = {
+  mine: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
+  farm: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
+};
+
 export default class Planet {
   
   constructor(name, isHabitable, potential, resourcesLevel, x, y, isColonized = false) {
@@ -10,8 +50,18 @@ export default class Planet {
     this.x = x;
     this.y = y;
     this.state = 'uncolonized';
+    
+    this.workers = 0;
+    this.employedWorkers = 0;
+    this.buildings = isHabitable ? COLONIZED_PLANET_START_BUILDINGS : [];
+    this.inventory = isHabitable ? FoodService.getStartFoodInventory() : [];
+    this.industries = {
+      mine: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
+      farm: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
+    };
 
     this._generateInfo();
+    
   }
   
   static get MAX_HABIT_TEMP() {
@@ -105,4 +155,93 @@ export default class Planet {
       return _.random(Math.min(MIN_SIZE * 2, MAX_SIZE / 2), MAX_SIZE);
     }
   }
+  
+  getAllEmployeesCount() {
+    const quarters = _.find(this.buildings, ['id', 'livingQuarters']);
+    if (quarters) {
+      return EMPLOYEES_PER_QUARTERS_LEVEL_COUNT[quarters.level];
+    } else {
+      return MINIMAL_EMPLOYEES_COUNT;
+    }
+  }  
+  
+  getIdleEmployeesCount() {
+    const allEmployeesCount = this.getAllEmployeesCount();
+    const allEmployed = this.industries.mine.employed + this.industries.farm.employed;
+    return allEmployeesCount - allEmployed;
+  } 
+  
+  getAllEdibleFoodCount() {
+    return FoodService.getAllEdibleFoodAsNutritionUnits(this.inventory);
+  }
+  
+  getFoodReserves() {
+    const allEmployeesCount = this.getAllEmployeesCount();
+    const demand = FOOD_DEMAND_PER_EMPLOYEE * allEmployeesCount;
+    return (this.getAllEdibleFoodCount() / demand).toFixed(1);
+  }
+  
+  getEmployedCountInIndustry(industry) {
+    const relevantIndustry = this._getIndustry(industry);
+    return relevantIndustry.employed;
+  }
+  
+  getEmployableCountInIndustry(industry) {
+    const indestryBuildingsMap = {
+      mine: () => _.find(this.buildings, ['id', 'mine']),
+      farm: () => _.find(this.buildings, ['id', 'farm']),
+    };
+    const building = indestryBuildingsMap[industry]();
+    if (!building) {
+      console.warn('No buildings for industry :', industry);
+      return 0;
+    }
+
+    return EMPLOYEES_PER_BUILDING_LEVEL_COUNT[industry][building.level];
+  }
+  
+  _getIndustry(industry) {
+    const relevantIndustry = this.industries[industry];
+    if (!relevantIndustry) {
+      console.warn('Unknown industry :', industry);
+      return null;
+    } else {
+      return relevantIndustry;
+    }
+  }
+  
+  addEmployeeInIndustry(industry) {
+    const relevantIndustry = this._getIndustry(industry);
+    const max = this.getEmployableCountInIndustry(industry);
+    const available = this.getIdleEmployeesCount();
+    if (relevantIndustry.employed < max) {
+      if (available === 0) {
+        const removalResult = this.removeEmployeeFromIndustry(OPPOSITE_INDUSTRY_MAP[industry]);
+        if (removalResult) relevantIndustry.employed++;
+      } else {
+        relevantIndustry.employed++;
+      }
+    }
+  }
+  
+  removeEmployeeFromIndustry(industry) {
+    const relevantIndustry = this._getIndustry(industry);
+    const available = this.getEmployedCountInIndustry(industry);
+    if (available > 0) {
+      relevantIndustry.employed--;
+      return true;
+    }
+    return false;
+  }
+  
+  getIndustryWorkProgressStepValue(industry) {
+    const workers = this.getEmployedCountInIndustry(industry);
+    return MINER_CONTRIBUTION_VALUE * workers;
+  }
+  
+  getIndustryTool(industry) {
+    const relevantIndustry = this._getIndustry(industry);
+    return relevantIndustry.tool;
+  }
+
 }

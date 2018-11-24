@@ -56,6 +56,8 @@ export default class LoadingManager {
 
     game.load.audio('thud', 'resources/audio/push.mp3');
     game.load.audio('thud_bounce', 'resources/audio/disabled_bounce.mp3');
+    game.load.audio('farm_action', 'resources/audio/farm_action.wav');
+    game.load.audio('mine_action', 'resources/audio/mine_action.wav');
 
     game.load.audio('colonize_progress', 'resources/audio/colonize_progress.mp3');
     game.load.audio('upbeat_drums', 'resources/audio/colonize_done.mp3');
@@ -64,6 +66,11 @@ export default class LoadingManager {
   static loadGameAssets(game) {
     LoadingManager.loadImages(game);
     LoadingManager.loadAudio(game);
-  }  
+  }
+  
+  static deferredLoadMusic(game) {
+    game.load.audio('music_upbeat_1', 'resources/audio/music/upbeat_1.m4a');
+    game.load.audio('music_upbeat_2', 'resources/audio/music/upbeat_2.m4a');
+  }
 }
 

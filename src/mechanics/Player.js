@@ -28,8 +28,9 @@ export default class Player {
   
   _getDefaultInventory() {
     return {
-      items: {},
-      ships: {},
+      items: {  },
+      // ships: { colonizers: [1,2,3,4,5,6] },
+      ships: {  },
     }
   }
  

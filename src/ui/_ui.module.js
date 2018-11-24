@@ -3,6 +3,8 @@ import PlanetPanel from './planetPanel/planetPanel';
 import TopBar from './topBar/topBar';
 import PlanetActionsPanel from './planetActionsPanel/planetActionsPanel';
 import EventRibbon from './eventRibbon/eventRibbon';
+import PlanetManager from './planetManager/planetManager';
+import IndustryPanel from './planetManager/industryPanel/industryPanel';
 
 export default angular
   .module('colonideUI.ui', [])
@@ -11,4 +13,7 @@ export default angular
   .component('topBar', new TopBar())
   .component('planetActionsPanel', new PlanetActionsPanel())
   .component('eventRibbon', new EventRibbon())
+  .component('planetManager', new PlanetManager())
+  .component('industryPanel', new IndustryPanel())
+
   .name;

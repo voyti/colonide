@@ -1,5 +1,8 @@
 @import 'node_modules/reset-css/_reset';
 @import 'node_modules/angular-tooltips/dist/angular-tooltips.min';
+@import 'src/ui/_reset.scss';
+@import 'src/ui/_simpleGrid.scss';
+@import 'src/ui/_variables.scss';
 
 @font-face {
     font-family: "Junction";
@@ -12,6 +15,14 @@
     src: url("/resources/web fonts/audimat_OT/AUdimat-Regular.otf");
     font-weight: 500;
 }
+
+@font-face {
+    font-family: "AUdimat";
+    src: url("/resources/web fonts/audimat_OT/AUdimat-Bold.otf");
+    font-weight: bold;
+}
+
+
 
 h1 {
   font-size: 28px;
@@ -27,6 +38,10 @@ h3 {
 
 p {
   padding: 6px;
+}
+
+tooltip.tooltips {
+  margin: 0 auto;
 }
 
 .root-panel-container {
@@ -47,4 +62,24 @@ p {
 img.medium-icon {
   width: 42px;
   position: absolute;
+}
+
+img.x-small-icon {
+  width: 12px;
+  position: absolute;
+}
+
+img.small-icon {
+  width: 22px;
+  position: absolute;
+}
+
+.separator {
+  display: inline-block;
+  width: calc(100% - 12px);
+  height: 3px;
+  margin: 0 auto;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: $color-green-2;
 }
