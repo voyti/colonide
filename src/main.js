@@ -16,7 +16,7 @@ import Player from 'mechanics/Player';
 import SoundManager from 'sounds/SoundManager';
 
 LodashMixinsManager.loadMixins();
-const game = new Phaser.Game(GameConstants.WIDTH, GameConstants.HEIGHT, Phaser.AUTO, '', { preload, create, update });
+const game = new Phaser.Game(GameConstants.BOARD_WIDTH, GameConstants.HEIGHT, Phaser.AUTO, '', { preload, create, update });
 const overContainer = {};
 
 function preload() {

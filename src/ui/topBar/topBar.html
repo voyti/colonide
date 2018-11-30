@@ -1,4 +1,7 @@
 <div class="top-bar-container" ng-style="{ width: bar.width }">
+
+  <span ng-click="bar.addCompleteInventory()" style="cursor:pointer">ADD COMPLETE INVENTORY</span>
+  <span ng-click="bar.timeScale2()" style="cursor:pointer">TIME X2</span>
   <span class="game-time">
     <span class="label">D:</span>
     <span class="value">{{bar.elapsedDays}}</span>

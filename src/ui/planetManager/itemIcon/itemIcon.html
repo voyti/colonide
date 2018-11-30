@@ -1,0 +1,11 @@
+<div class="item-icon-container" ng-class="{'no-background': icon.noBackground }">
+  <div class="inventory-item" ng-class="[icon.isBuildingConfig() ? 'large' : 'small', icon.item.id]"
+    ng-mouseenter="icon.setHover(true)"
+    ng-mouseleave="icon.setHover(false)">
+      <div class="relative-holder">
+        <span class="bottom-left-label text-shadow-outline">{{icon.bottomLeftLabel}}</span>
+        <span class="top-right-label">{{icon.topRightLabel}}</span>
+        <img class="item-icon-image" ng-src="{{icon.item.iconSrc}}"></img>
+      </div>
+  </div>
+</div>

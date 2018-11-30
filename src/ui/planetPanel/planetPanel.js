@@ -11,6 +11,9 @@ import Player from 'mechanics/Player';
 import PlanetDrawer from 'drawing/PlanetDrawer';
 import SoundManager from 'sounds/SoundManager';
 
+
+const COLONIZATION_PERIOD = 5000;
+
 export default class PlanetPanel {
     constructor() {
       'ngInject';
@@ -19,6 +22,7 @@ export default class PlanetPanel {
       this.controller = PlanetPanelController;
       this.bindings = {
         planet: '<',
+        gameTime: '<',
       };
     }
 }
@@ -66,7 +70,7 @@ class PlanetPanelController {
     
     getSideAlign() {
       if (this.planet) {
-        return this.planet.x > GameConstants.WIDTH / 2 ? 'align-left' : 'align-right';
+        return this.planet.x > GameConstants.BOARD_WIDTH / 2 ? 'align-left' : 'align-right';
       }
     }
     
@@ -124,6 +128,7 @@ class PlanetPanelController {
         }
         EventDispatchInterface.emit('planet-colonized', { planet: this.planet });
         this.colonizationStarted = false;
-      }, 5000);
+        this.Player.onNewPlanetColonized(this.planet);
+      }, COLONIZATION_PERIOD);
     }
   }

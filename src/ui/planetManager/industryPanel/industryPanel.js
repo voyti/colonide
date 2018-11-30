@@ -17,27 +17,29 @@ export default class IndustryPanel {
       this.bindings = {
         planet: '<',
         type: '@',
+        gameTime: '<',
       };
     }
 }
 
 class IndustryPanelController {
-    constructor($timeout, $scope, $interval) {
+    constructor($timeout, $scope, $interval, $rootScope) {
       'ngInject';
       this.$timeout = $timeout;
       this.$interval = $interval;
+      this.$rootScope = $rootScope;
       this.GameStateInterface = GameStateInterface.getInstance();
       this.SoundManager = SoundManager.getInstance();
       this.lastTotalDays = 0;
       this.mineProgress = 0;
       this.farmProgress = 0;
       this.maxProgress = MAX_PROGRESS;
-      // TODO OPTIMIZE
-      this.$interval(() => {
-        if (this.GameStateInterface.isInitialized()) {
-          this.onDateCheck(this.GameStateInterface.getGameTimeElapsedDetails());
-        }
-      }, 500);
+    }
+    
+    $onChanges(changes) {
+      if (changes.gameTime.currentValue && this.gameTime) {
+        this.onDateCheck(this.gameTime);
+      }
     }
     
     addEmployeeInIndustry(industry) {
@@ -63,12 +65,13 @@ class IndustryPanelController {
       this.farmProgress = this.applyIndustryProgress('farm', this.farmProgress, INDUSTRY_CLICK_CONTRIBUTION);
     }
     
+    // NOTE: FIRES TWICE - ONCE PER DAY PER INDUSTRY
     onDateCheck(gameTimeElapsedDetails) {
-
+      
       if (gameTimeElapsedDetails.totalDaysElapsed > this.lastTotalDays) {
         this.lastTotalDays = gameTimeElapsedDetails.totalDaysElapsed;
-        this.mineProgress = this.applyIndustryWork('mine', this.mineProgress);
-        this.farmProgress = this.applyIndustryWork('farm', this.farmProgress);
+        if (this.type === 'mine') this.mineProgress = this.applyIndustryWork('mine', this.mineProgress);
+        if (this.type === 'farm') this.farmProgress = this.applyIndustryWork('farm', this.farmProgress);
       }
     }
     
@@ -79,18 +82,39 @@ class IndustryPanelController {
     
     applyIndustryProgress(industry, industryProgress, additionalProgress) {
       const cachedMineProgress = industryProgress + additionalProgress;
-      
+
       if (cachedMineProgress > MAX_PROGRESS) {
         industryProgress = cachedMineProgress - MAX_PROGRESS;
         this.onIndustryProgressFinished(industry);
       } else {
         industryProgress = cachedMineProgress;
       }
+
       return industryProgress;
     }
     
     onIndustryProgressFinished(industry) {
-      console.warn('GET RESOURCES FROM ', industry);
+      const industryYield = this.planet.onIndustryProgressFinished(industry);
+
+      if (industry === 'mine') {
+        this.receivedMineResources = industryYield;
+        this.mineResourcesIn = true;
+
+        this.$timeout(() => {
+          this.receivedMineResources = null;
+          this.mineResourcesIn = false;
+        }, 3000);
+        this.SoundManager.play('mine_complete');
+        
+      } else if (industry === 'farm') {
+        this.receivedFarmResources = industryYield;
+        this.farmResourcesIn = true;
+
+        this.$timeout(() => {
+          this.receivedFarmResources = null;
+          this.farmResourcesIn = false;
+        }, 3000);
+      }
     }
     
     getToolInfo(industry) {

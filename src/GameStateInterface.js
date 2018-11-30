@@ -1,4 +1,5 @@
 /* global Phaser */
+import EventDispatchInterface from 'EventDispatchInterface';
 
 let instance = null;
 export default class GameStateInterface {
@@ -21,6 +22,7 @@ export default class GameStateInterface {
       this.state = 'initial';
       this.time = game.time;
       this.initializedAt = game.time.time;
+      window.setInterval(() => EventDispatchInterface.emit('day-passed', { time: this.getGameTimeElapsedDetails() }), this.MILLIS_PER_DAY);
     }
     return GameStateInterface.getInstance();
   }

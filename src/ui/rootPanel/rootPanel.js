@@ -21,7 +21,7 @@ class RootPanelController {
       this.$scope = $scope;
 
       this.height = `${GameConstants.HEIGHT}px`;
-      this.width = `${GameConstants.WIDTH}px`;
+      this.width = `${GameConstants.TOTAL_WIDTH}px`;
       
       EventDispatchInterface.on('planet-selected', ({ planet }) => {
         this.selectedPlanet = planet;
@@ -32,6 +32,11 @@ class RootPanelController {
       EventDispatchInterface.on('planet-colonized', ({ planet }) => {
         this.selectedPlanet = planet;
         this.ribbonEventData = { type: 'planet-colonized', planet };
+        this.onExternalDataUpdate();
+      });     
+      
+      EventDispatchInterface.on('day-passed', ({ time }) => {
+        this.gameTime = time;
         this.onExternalDataUpdate();
       });
     }

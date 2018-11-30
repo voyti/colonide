@@ -1,0 +1,90 @@
+@import 'src/ui/_variables.scss';
+
+@font-face {
+    font-family: "Junction";
+    src: url("/resources/web fonts/junction_regular_macroman/Junction-regular-webfont.woff");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "AUdimat";
+    src: url("/resources/web fonts/audimat_OT/AUdimat-Regular.otf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "AUdimat";
+    src: url("/resources/web fonts/audimat_OT/AUdimat-Bold.otf");
+    font-weight: bold;
+}
+
+body {
+  pointer-events: none;
+  width: 100%;
+  background: url('/resources/planets/Space.png') repeat-x;
+}
+
+canvas {
+  pointer-events: all;	
+}
+
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  padding: 6px;
+}
+
+tooltip.tooltips {
+  margin: 0 auto;
+}
+
+.text-shadow-outline {
+  -webkit-text-stroke-width: 0!important;
+  text-shadow:
+   -1px -1px 0 $color-font-outline-grey-1,  
+    1px -1px 0 $color-font-outline-grey-1,
+    -1px 1px 0 $color-font-outline-grey-1,
+     1px 1px 0 $color-font-outline-grey-1;
+}
+
+.empty-panel-label {
+  text-align: center;
+  color: $color-slight-grey-1;
+}
+
+.text-label {
+  margin: 12px 6px;
+  margin-left: 0;
+  font-size: 22px;
+  
+  &.large {
+      font-size: 32px;
+  }
+  
+  -webkit-text-stroke: $color-font-outline-grey-1;
+  -webkit-text-stroke-width: 0.5px;
+}
+
+.small-indented-icon {
+  margin: 0 6px;
+  max-width: 18px;
+  max-height: 18px;
+}
+
+.relative-holder {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}

@@ -1,5 +1,5 @@
 <div class="industry-panel-container">
-  <div ng-if="panel.type === 'mining'">
+  <div ng-if="panel.type === 'mine'">
     <div class="industry-icon-button" ng-click="panel.applyMinePlayerWork()" ng-class="{'industry-cooldown': panel.isMineLocked}">
       <img src="/resources/icons/mine.png"></img>
     </div>
@@ -10,6 +10,11 @@
         <div class="slot-reflection"></div>
         <div class="mine-progress-made" ng-style="{width: panel.mineProgress + '%' }"></div>
         <span>{{panel.mineProgress}}/{{panel.maxProgress}}</span>
+        <div class="received-resources" ng-show="panel.receivedMineResources" ng-class="{'items-in': panel.mineResourcesIn }">
+          <div class="received-item" ng-repeat="item in panel.receivedMineResources">
+            +<item-icon item="item" no-background="true"></item-icon>
+          </div>
+        </div>
       </div>
       
       <div class="add-employee" ng-click="panel.addEmployeeInIndustry('mine')">
@@ -21,14 +26,12 @@
       
       <div class="tool-slot mine-tool" ng-class="[panel.getToolInfo('mine').quality]">
         <div class="slot-reflection"></div>
-        <img src="{{panel.getToolInfo('mine').iconSrc}}"></img>
+        <img ng-src="{{panel.getToolInfo('mine').iconSrc}}"></img>
       </div>
     </div>
-    
-    
   </div>
   
-  <div ng-if="panel.type === 'farming'">
+  <div ng-if="panel.type === 'farm'">
     <div class="industry-icon-button" ng-click="panel.applyFarmPlayerWork()" ng-class="{'industry-cooldown': panel.isFarmLocked}">
       <img src="/resources/icons/farm.png"></img>
     </div>
@@ -39,6 +42,11 @@
         <div class="slot-reflection"></div>
         <div class="farm-progress-made" ng-style="{width: panel.farmProgress + '%' }"></div>
         <span>{{panel.farmProgress}}/{{panel.maxProgress}}</span>
+        <div class="received-resources" ng-show="panel.receivedFarmResources" ng-class="{'items-in': panel.farmResourcesIn }">
+          <div class="received-item" ng-repeat="item in panel.receivedFarmResources">
+            +<item-icon item="item" no-background="true"></item-icon>
+          </div>
+        </div>
       </div>
       
       <div class="add-employee" ng-click="panel.addEmployeeInIndustry('farm')">

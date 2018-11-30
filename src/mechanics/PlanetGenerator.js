@@ -10,7 +10,7 @@ export default class PlanetGenerator {
     'Rawiri', 'Pihopa', 'Rawiri', 'Taimona', 'Urepo', 'Petera', 'Waiara', 'Tipene', 
     'Rongo', 'Nepe', 'Tahiwai', 'Raharuhi', 'Eraka', 'Tipene'];
     
-    this.PLANET_BOX_MARGIN = 35; // the closer to half of box size, the more orderly the planets will be organized
+    this.PLANET_BOX_MARGIN = 50; // the closer to half of box size, the more orderly the planets will be organized
   }
   
   generate(number) {
@@ -49,9 +49,9 @@ export default class PlanetGenerator {
     const boxingHelper = (separations, total) => _.times(separations, 
       (i) => (i + 1) * (total / separations) - (total / separations / 2));
       
-    const xBoxes = boxingHelper(numOfColumns, GameConstants.WIDTH);
+    const xBoxes = boxingHelper(numOfColumns, GameConstants.BOARD_WIDTH);
     const yBoxes = boxingHelper(numOfRows, GameConstants.HEIGHT);
-    const boxWidth = GameConstants.WIDTH / numOfColumns;
+    const boxWidth = GameConstants.BOARD_WIDTH / numOfColumns;
     const boxHeight = GameConstants.HEIGHT / numOfRows;
     const margin = this.PLANET_BOX_MARGIN;
 

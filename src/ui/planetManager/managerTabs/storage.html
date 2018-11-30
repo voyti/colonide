@@ -1,3 +1,28 @@
 <div class="manager-storage-container">
-  STORAGE
+  <div class="visualization-panel">
+    <div class="img-holder">
+        <img src="/resources/visualizations/storage.jpg"></img>
+    </div>
+  </div>
+  
+  <div class="text-label large">Organic</div>
+  <div class="storage-panel">
+    <span ng-repeat="item in manager.inventories.organic">
+      <item-icon item="item"></item-icon>
+    </span>
+  </div>
+  
+  <div class="text-label large">Minerals</div>
+  <div class="storage-panel">
+    <span ng-repeat="item in manager.inventories.minerals">
+        <item-icon item="item"></item-icon>
+    </span>
+  </div>
+  
+  <div class="text-label large">Other</div>
+  <div class="storage-panel">
+    <span ng-repeat="item in manager.inventories.other">
+      <item-icon item="item"></item-icon>
+    </span>
+  </div>
 </div>

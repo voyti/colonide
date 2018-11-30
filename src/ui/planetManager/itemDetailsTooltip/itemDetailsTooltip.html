@@ -1,0 +1,12 @@
+<div class="item-details-tooltip-container"
+  ng-show="tooltip.item.id && tooltip.referenceRect"
+  ng-style="{ top: tooltip.referenceRect.topPosition, left: tooltip.referenceRect.leftPosition }">
+  
+  <div class="item-name">{{tooltip.item.name}} ({{tooltip.item.amount}})</div>
+  <div class="item-quality" ng-class="tooltip.item.quality">{{tooltip.item.quality}}</div>
+  <div class="img-holder" ng-class="tooltip.item.quality">
+    <img ng-src="{{tooltip.item.iconSrc}}"></img>
+  </div>
+
+  <div class="item-description">{{tooltip.item.description}}</div>
+</div>

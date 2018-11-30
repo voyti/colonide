@@ -83,6 +83,19 @@ $INDUSTRY_CLICK_TIMEOUT: 1s;
         background: url('/resources/backgrounds/farm-progress.png') repeat-x;
         background-size: $slot-height;
       }
+      
+      .received-resources {
+        opacity: 0;
+        position: absolute;
+        top: -40px;
+        right: 0;
+        &.items-in {
+          animation: items-in-out 3s;
+        }
+        .received-item {
+          display: inline-block;
+        }
+      }
     }
   }
 
@@ -129,10 +142,16 @@ $INDUSTRY_CLICK_TIMEOUT: 1s;
       opacity: 0.6;
     }
   }
-  
 }
 
 @keyframes industryCooldown {
   from { opacity: 0; transform: scale(1.2); }
   to { opacity: 1; transform: scale(0.9); }
+}
+
+@keyframes items-in-out {
+  0% { opacity: 0; top: -0; }
+  33% { opacity: 1; top: -40px; }
+  66% { opacity: 1; top: -40px; }
+  100% { opacity: 0; top: -60px; }
 }

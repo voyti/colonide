@@ -7,6 +7,7 @@ export default class Player {
   constructor(inventory) {
     this.inventory = inventory || this._getDefaultInventory();
     this.GameStateInterface = GameStateInterface.getInstance();
+    this.colonizedPlanets = [];
   }
   
   static getInstance() {
@@ -24,6 +25,15 @@ export default class Player {
   
   isPlayerEligibleToScan() {
     return _.get(this.inventory.buildings, ['id', 'long_range_scanner']);
+  }
+  
+  onNewPlanetColonized(planet) {
+    this.colonizedPlanets.push(planet);
+  }
+  
+  // @debug
+  addCompleteInventory() {
+    _.forEach(this.colonizedPlanets, (planet) => planet.addCompleteInventory());
   }
   
   _getDefaultInventory() {

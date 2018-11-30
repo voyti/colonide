@@ -1,27 +1,14 @@
-/* global _ */
+/* global _, angular */
 
 /* Planet class. Should keep planet state and simple mechanics. 
  * Advanced mechanics should be calculated using stateless PlanetService 
  */
 import PlanetService from './PlanetService';
-import FoodService from './FoodService';
+import OrganicService from './OrganicService';
+import MineralsService from './MineralsService';
+import BuildingsService from './BuildingsService';
 import IndustryToolsService from './IndustryToolsService';
 
-const COLONIZED_PLANET_START_BUILDINGS = [
-  {
-    id: 'livingQuarters',
-    name: 'Living Quarters',
-    level: 1,
-  }, {
-    id: 'mine',
-    name: 'Mine',
-    level: 1,
-  }, {
-    id: 'farm',
-    name: 'Farm',
-    level: 1,
-  },
-];
 
 const OPPOSITE_INDUSTRY_MAP = {
   mine: 'farm',
@@ -29,11 +16,11 @@ const OPPOSITE_INDUSTRY_MAP = {
 };
 
 const MINER_CONTRIBUTION_VALUE = 1;
-const FOOD_DEMAND_PER_EMPLOYEE = 30;
+const DAILY_FOOD_DEMAND_PER_EMPLOYEE = 0.5;
+const MONTHLY_FOOD_DEMAND_PER_EMPLOYEE = 30 * DAILY_FOOD_DEMAND_PER_EMPLOYEE;
+
 const MINIMAL_EMPLOYEES_COUNT = 0;
-const EMPLOYEES_PER_QUARTERS_LEVEL_COUNT = 
-  { 1: 10, 2: 30, 3: 50, 4: 70, 5: 90,};
-  
+
 const EMPLOYEES_PER_BUILDING_LEVEL_COUNT = {
   mine: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
   farm: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
@@ -53,8 +40,8 @@ export default class Planet {
     
     this.workers = 0;
     this.employedWorkers = 0;
-    this.buildings = isHabitable ? COLONIZED_PLANET_START_BUILDINGS : [];
-    this.inventory = isHabitable ? FoodService.getStartFoodInventory() : [];
+    this.buildings = isHabitable ? BuildingsService.getStartBuildings() : [];
+    this.inventory = isHabitable ? OrganicService.getStartFoodInventory() : [];
     this.industries = {
       mine: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
       farm: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
@@ -95,7 +82,6 @@ export default class Planet {
     this.type = this._generateType();
     this.color = this._generateColor();
     this.size = this._generateSize();
-
   }
   
   setX(x){
@@ -159,7 +145,8 @@ export default class Planet {
   getAllEmployeesCount() {
     const quarters = _.find(this.buildings, ['id', 'livingQuarters']);
     if (quarters) {
-      return EMPLOYEES_PER_QUARTERS_LEVEL_COUNT[quarters.level];
+      const quartersCapacityInfo = _.find(quarters.levelInfo, ['id', 'capacity']);
+      return quartersCapacityInfo.valueGetter(quarters.level);
     } else {
       return MINIMAL_EMPLOYEES_COUNT;
     }
@@ -172,12 +159,12 @@ export default class Planet {
   } 
   
   getAllEdibleFoodCount() {
-    return FoodService.getAllEdibleFoodAsNutritionUnits(this.inventory);
+    return OrganicService.getAllEdibleFoodAsNutritionUnits(this.inventory);
   }
   
   getFoodReserves() {
     const allEmployeesCount = this.getAllEmployeesCount();
-    const demand = FOOD_DEMAND_PER_EMPLOYEE * allEmployeesCount;
+    const demand = MONTHLY_FOOD_DEMAND_PER_EMPLOYEE * allEmployeesCount;
     return (this.getAllEdibleFoodCount() / demand).toFixed(1);
   }
   
@@ -186,7 +173,7 @@ export default class Planet {
     return relevantIndustry.employed;
   }
   
-  getEmployableCountInIndustry(industry) {
+  _findIndustryBuilding(industry) {
     const indestryBuildingsMap = {
       mine: () => _.find(this.buildings, ['id', 'mine']),
       farm: () => _.find(this.buildings, ['id', 'farm']),
@@ -194,8 +181,14 @@ export default class Planet {
     const building = indestryBuildingsMap[industry]();
     if (!building) {
       console.warn('No buildings for industry :', industry);
-      return 0;
+      return null;
     }
+    return building;
+  }
+  
+  getEmployableCountInIndustry(industry) {
+    const building = this._findIndustryBuilding(industry);
+    if (!building) return 0;
 
     return EMPLOYEES_PER_BUILDING_LEVEL_COUNT[industry][building.level];
   }
@@ -243,5 +236,78 @@ export default class Planet {
     const relevantIndustry = this._getIndustry(industry);
     return relevantIndustry.tool;
   }
-
+  
+  getTypeInventory(type) {
+    return _.filter(this.inventory, ['type', type]);
+  }  
+  
+  // application: 'building-material' | 'ship-material | 'food'
+  getInventoryByApplication(application) {
+    return _.filter(this.inventory, (item) => _.includes(item.applications, application));
+  }
+  
+  _getIdFromInventory(id) {
+    return _.find(this.inventory, ['id', id]);
+  }
+  
+  getBuildingsOfType(type) {
+    const buildingsInventory = this._getBuildingsInventory();
+    if (type === 'built') {
+      return buildingsInventory;
+    } else if (type === 'available') {
+      return BuildingsService.getAvailableBuildings(buildingsInventory);
+    }
+  }
+  
+  _getBuildingsInventory() {
+    return this.buildings;
+  }
+  
+  onIndustryProgressFinished(industry) {
+    const building = this._findIndustryBuilding(industry);
+    const tool = this.getIndustryTool(industry);
+    let industryYield;
+    if (industry === 'mine') industryYield = MineralsService.getYieldForLevelAndTool(building.level, tool);
+    if (industry === 'farm') industryYield = OrganicService.getYieldForLevelAndTool(building.level, tool);
+    this._addToInventory(industryYield);
+    return industryYield;
+  }
+  
+  _addToInventory(items) {
+    console.info('Adding ', _.map(items, (item) => `${item.amount} ${item.name}`),  ' to inventory on ', this.name);
+    _.forEach(items, (item) => {
+      if (item.amount === 0) return;
+      
+      const existing = this._getIdFromInventory(item.id);
+      if (existing) {
+        existing.amount += item.amount; 
+      } else {
+        this.inventory.push(item);
+      }
+    });
+  }
+  
+  removeFromInventory(items) {
+    _.forEach(items, (item) => {
+      if (item.amount === 0) return;
+      
+      const existing = this._getIdFromInventory(item.id);
+      if (existing) {
+        if (item.amount > existing.amount) console.warn('Cannot remove ', item.amount, item.id, ', not enough in inventory');
+        existing.amount -= item.amount; 
+      } else { console.warn('Cannot remove ', item, ', not present in inventory'); }
+    });
+  }
+  
+  applyDailyFoodConsumption() {
+    const employeesCount = this.getAllEmployeesCount();
+    const requiredNutrition = DAILY_FOOD_DEMAND_PER_EMPLOYEE * employeesCount;
+    const consumedFood = OrganicService.getFoodEquivalentOfNutritionUnitsFromInventory(this.inventory, requiredNutrition);
+    if (consumedFood) this.removeFromInventory(consumedFood);
+  }
+  
+  // @debug
+  addCompleteInventory() {
+    this._addToInventory([...MineralsService.getAllItems(), ...OrganicService.getAllItems()]);
+  }
 }

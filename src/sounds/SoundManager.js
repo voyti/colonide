@@ -8,6 +8,7 @@ export default class SoundManager {
         'ui_click_disabled': 'thud_bounce',
         'farm_action': 'farm_action',
         'mine_action': 'mine_action',
+        'mine_complete': 'mine_complete',
         
         'game_start': 'music_1',
         'game_random_music_1': 'music_1',

@@ -5,27 +5,26 @@
   <!--<div class="overview-yield">Last yield:</div>-->
   
   <div class="top-info">
-    <div class="col-4">
+    <div class="col-4" title="All Available Employees">
       {{manager.planet.getAllEmployeesCount()}} <img src="/resources/icons/employees.svg" class="icon">
     </div>
     
-    <div class="col-4" ng-class="{'has-idle-workers': manager.planet.getIdleEmployeesCount() > 0 }">
+    <div class="col-4" title="Idle Employees" ng-class="{'has-idle-workers': manager.planet.getIdleEmployeesCount() > 0 }">
       {{manager.planet.getIdleEmployeesCount()}} <img src="/resources/icons/idle_employees.svg" class="icon">
     </div>
     
-    <div class="col-4" ng-class="{'low-on-food': manager.planet.getFoodReserves() < 1 }">
+    <div class="col-4" title="Food Reserve (in months)" ng-class="{'low-on-food': manager.planet.getFoodReserves() < 1 }">
       {{manager.planet.getFoodReserves()}} <img src="/resources/icons/food.png" class="icon">
     </div>
-    
   </div>
 
   <div class="separator"></div>
     
-  <div class="industry-label">Collecting Resources</div>
-  <industry-panel type="mining" planet="manager.planet" type="'mining'"></industry-panel>
-  <industry-panel type="farming" planet="manager.planet" type="'farming'"></industry-panel>
+  <div class="text-label large">Collecting Resources</div>
+  <industry-panel type="mine" planet="manager.planet" game-time="manager.gameTime"></industry-panel>
+  <industry-panel type="farm" planet="manager.planet" game-time="manager.gameTime"></industry-panel>
   
   <div class="separator"></div>
-  <div class="industry-label">In Production</div>
-  <div>Nothing in production</div>
+  <div class="text-label large">In Production</div>
+  <div class="empty-panel-label">Nothing in production</div>
 </div>

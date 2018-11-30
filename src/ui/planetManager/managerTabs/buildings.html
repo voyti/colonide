@@ -1,3 +1,44 @@
 <div class="manager-buildings-container">
-  BUILDINGS
+  <div class="visualization-panel">
+    <div class="img-holder">
+        <img src="/resources/visualizations/buildings.jpg"></img>
+    </div>
+  </div>
+  
+  <div class="text-label resources-info">Building Resources:     
+    <span ng-if="manager.inventories.buildingMaterials.length"
+      ng-repeat="item in manager.inventories.buildingMaterials">
+      <item-icon item="item" no-background="true"></item-icon>
+    </span>
+    <span ng-if="!manager.inventories.buildingMaterials.length">
+      <img class="small-indented-icon" src="/resources/icons/empty_icon.svg"></img>
+    </span>
+  </div>
+  
+  <div class="text-label large">Built</div>
+    <span ng-repeat="building in manager.builtBuildings">
+      <item-icon
+        item="building"
+        configuration="building">
+      </item-icon>
+    </span>  
+    
+  <div class="text-label large">Available</div>
+    <span ng-repeat="building in manager.availableBuildings">
+      <item-icon
+        item="building"
+        configuration="building">
+      </item-icon>
+    </span>
+
+    
+    <!--<div ng-show="'false'" class="building-name">{{building.name}}</div>-->
+    <!--<img class="building-icon" ng-src="{{building.iconSrc}}"></img>-->
+    <!--<div class="building-info">-->
+    <!--  <div class="info-item" ng-repeat="info in building.levelInfo">-->
+    <!--    {{info.label}}{{info.valueGetter(building.level)}}{{info.valueSuffix || ''}}-->
+    <!--  </div>-->
+    <!--</div>-->
+    <!--<div class="building-description">{{building.description}}</div>-->
+
 </div>

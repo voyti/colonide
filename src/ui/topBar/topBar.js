@@ -2,6 +2,8 @@ import templateUrl from './topBar.html';
 import './topBar.scss';
 import GameStateInterface from 'GameStateInterface';
 import GameConstants from 'GameConstants';
+import EventDispatchInterface from 'EventDispatchInterface';
+import Player from 'mechanics/Player';
 
 export default class TopBar {
     constructor() {
@@ -10,7 +12,7 @@ export default class TopBar {
       this.templateUrl = templateUrl;
       this.controller = TopBarController;
       this.bindings = {
-        
+
       };
     }
 }
@@ -19,20 +21,29 @@ class TopBarController {
   
   constructor($interval) {
     this.$interval = $interval;
-    this.width = `${GameConstants.WIDTH}px`;
+    this.width = `${GameConstants.TOTAL_WIDTH}px`;
     this.GameStateInterface = GameStateInterface.getInstance();
+    this.Player = Player.getInstance();
 
-    this.$interval(() => {
+    EventDispatchInterface.on('day-passed', ({ time }) => {
       if (this.GameStateInterface.isInitialized()) {
-        this.setDisplayGameTime(this.GameStateInterface.getGameTimeElapsedDetails());
+        this.setDisplayGameTime(time);
       }
-    }, 500);
+    });
   }
-  
+
   setDisplayGameTime(gameTimeElapsedDetails) {
     const timeDetails = gameTimeElapsedDetails;
     this.elapsedDays = timeDetails.gameDays;
     this.elapsedMonths = timeDetails.gameMonths;
     this.elapsedYears = timeDetails.gameYears;
+  }
+  
+  addCompleteInventory() {
+    this.Player.addCompleteInventory();
+  }  
+  
+  timeScale2() {
+    this.Player.addCompleteInventory();
   }
 }

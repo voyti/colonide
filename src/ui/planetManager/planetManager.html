@@ -5,7 +5,7 @@
       <img class="small-icon" src="/resources/icons/planet.png">Overview
     </div>
 
-    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'storage'}" ng-click="manager.openTab('storage')">
+    <div class="tab-btn" ng-class="{ opened: manager.openedTab === 'storage', 'content-changed': manager.isTabContentChanged('storage')}" ng-click="manager.openTab('storage')">
       <img class="small-icon" src="/resources/icons/crate.png">Storage
     </div>
 

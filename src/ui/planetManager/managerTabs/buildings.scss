@@ -1,0 +1,18 @@
+@import 'src/ui/_variables.scss';
+
+.manager-buildings-container {
+  .visualization-panel {
+     .img-holder > img {
+      transform: scale(1.25) !important;
+      padding-top: 25px !important;
+    }   
+  }
+  
+  .resources-info {
+    .inventory-item {
+      top: 10px;
+      transform: scale(0.7);
+    }
+  }
+
+}

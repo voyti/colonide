@@ -1,54 +1,16 @@
 @import 'node_modules/reset-css/_reset';
 @import 'node_modules/angular-tooltips/dist/angular-tooltips.min';
 @import 'src/ui/_reset.scss';
+@import 'src/ui/_index.scss';
 @import 'src/ui/_simpleGrid.scss';
 @import 'src/ui/_variables.scss';
-
-@font-face {
-    font-family: "Junction";
-    src: url("/resources/web fonts/junction_regular_macroman/Junction-regular-webfont.woff");
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "AUdimat";
-    src: url("/resources/web fonts/audimat_OT/AUdimat-Regular.otf");
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "AUdimat";
-    src: url("/resources/web fonts/audimat_OT/AUdimat-Bold.otf");
-    font-weight: bold;
-}
-
-
-
-h1 {
-  font-size: 28px;
-}
-
-h2 {
-  font-size: 24px;
-}
-
-h3 {
-  font-size: 20px;
-}
-
-p {
-  padding: 6px;
-}
-
-tooltip.tooltips {
-  margin: 0 auto;
-}
 
 .root-panel-container {
   font-family: "AUdimat", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   position: absolute;
-  pointer-events: none;
+  // pointer-events: none;
   overflow: hidden;
+  z-index: 10;
   
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

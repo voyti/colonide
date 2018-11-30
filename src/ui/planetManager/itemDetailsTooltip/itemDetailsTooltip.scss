@@ -1,0 +1,79 @@
+@import 'src/ui/_variables.scss';
+
+$tooltipWidth: 300px;
+$tooltipHeight: 350px;
+$iconMaxWidth: 100px;
+$iconMaxHeight: 100px;
+
+.item-details-tooltip-container {
+  display: inline-block;
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: -$tooltipWidth;
+  width: $tooltipWidth;
+  height: $tooltipHeight;
+  border: 1px solid $color-slight-grey-1;
+  padding: 6px;
+  z-index: 9999;
+  color: $color-white;
+  
+  div.item-name {
+    text-align: middle;
+    font-size: 24px;
+    margin: 12px 0;
+  }
+  
+  div.item-quality {
+    margin-top: -8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    &.common {
+      color: $color-ui-common-quality;
+    }    
+    &.rare {
+      color: $color-ui-rare-quality;
+    }    
+    &.valuable {
+      color: $color-ui-valuable-quality;
+    }    
+    &.unique {
+      color: $color-ui-unique-quality;
+    }
+  }
+  
+  .img-holder {
+    text-align: center;
+    background-size: cover;
+    padding: 6px 0;
+    
+    
+    &.common {
+      background: radial-gradient(circle at center,$color-ui-common-quality , transparent 45%);
+    }    
+    &.rare {
+      background: radial-gradient(circle at center,$color-ui-rare-quality , transparent 45%);
+    }    
+    &.valuable {
+      background: radial-gradient(circle at center,$color-ui-valuable-quality , transparent 45%);
+    }    
+    &.unique {
+      background: radial-gradient(circle at center,$color-ui-unique-quality , transparent 45%);
+    }
+  
+   img {
+      margin: 12px 0;
+      max-width: $iconMaxWidth;
+      max-height: $iconMaxHeight;
+      position: static;
+    } 
+  }
+  
+  div.item-description {
+    -webkit-text-stroke-width: 0;
+    padding: 6px 12px;
+    text-align: justify;
+    font-size: 16px;
+    line-height: 1.1em;
+  }
+}
