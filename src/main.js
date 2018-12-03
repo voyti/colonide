@@ -18,9 +18,15 @@ import SoundManager from 'sounds/SoundManager';
 LodashMixinsManager.loadMixins();
 const game = new Phaser.Game(GameConstants.BOARD_WIDTH, GameConstants.HEIGHT, Phaser.AUTO, '', { preload, create, update });
 const overContainer = {};
+let mapGenerator = null;
+let planets = null;
 
 function preload() {
   LoadingManager.loadGameAssets(game);
+}
+
+const redrawPlanets = () => {
+  mapGenerator.generateMap(planets, game);
 }
 
 function create() {
@@ -29,18 +35,19 @@ function create() {
     const player = Player.getInstance();
     
     const gen = new PlanetGenerator();
-    const planets = gen.generate(12);
+    planets = gen.generate(12);
 
     game.add.sprite(0, 0, 'space-bg');
 
     overContainer.planets = planets;
-    
-    (new MapGenerator).generateMap(planets, game);
+    mapGenerator = new MapGenerator();
+    redrawPlanets();
     // soundManager.play('game_start');
     LoadingManager.deferredLoadMusic(game);
     setTimeout(() => soundManager.play('music_upbeat_1'), 10000);
 }
 
 function update() {
-  BoardLoopManager.doLoop(game, overContainer.planets);
+  BoardLoopManager.doLoop(game, overContainer.planets, redrawPlanets);
 }
+

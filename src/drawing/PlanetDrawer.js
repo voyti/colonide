@@ -133,7 +133,13 @@ export default class PlanetDrawer {
   
   drawPlanet(planet, game) {
     const SIZE_TO_SCALE = 100000 * 4;
-    const planetImg = _.get(planet, 'theme.name') || this._resolvePlanetImg(planet);
+    if (!planet.drawingData.boardImage) {
+      const randomPlanetImg = _.get(planet, 'theme.name') || this._resolvePlanetImg(planet);
+      planet.drawingData.boardImage = randomPlanetImg;
+    } else {
+      planet.drawingData.sprite.kill();
+    }
+    const planetImg = planet.drawingData.boardImage;
     const planetSprite = game.add.sprite(planet.x, planet.y, planetImg.name);
     
     planetSprite.anchor.set(0.5);

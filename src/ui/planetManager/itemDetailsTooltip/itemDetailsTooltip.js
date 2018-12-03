@@ -4,6 +4,7 @@ import './itemDetailsTooltip.scss';
 // import SoundManager from 'sounds/SoundManager';
 // import GameStateInterface from 'GameStateInterface';
 import GameConstants from 'GameConstants';
+import MineralsService from 'mechanics/MineralsService';
 
 const PANEL_WIDTH = 300;
 const PANEL_HEIGHT = 350;
@@ -34,6 +35,7 @@ class ItemDetailsTooltipController {
         if (this.closeTimer) this.$timeout.cancel(this.closeTimer);
         this.referenceElement = element;
         this.item = item;
+        this.assignItemValues(item);
         this.setRect();
       });
       
@@ -43,6 +45,12 @@ class ItemDetailsTooltipController {
           this.item = null;
         }, 200);
       });
+    }
+    
+    assignItemValues(item) {
+      this.buildingNextLevelCost = this.getBuildingNextLevelCost(item);
+      this.buildingCurrentLevelCapacity = this.getBuildingCapacity(item, false);
+      this.buildingNextLevelCapacity = this.getBuildingCapacity(item, true);
     }
     
     setRect() {
@@ -61,6 +69,27 @@ class ItemDetailsTooltipController {
             leftPosition: `${boundedLeft}px`,
           };
         }
+      }
+    }
+    
+    getBuildingNextLevelCost(building) {
+      const buildCostTool = _.find(building.levelTools, ['id', 'buildCost']);
+      const currentLevel = building.level || 0;
+      if (buildCostTool) {
+        return _.map(buildCostTool.valueGetter(currentLevel + 1), (costTuple) => MineralsService.getMineralItemById(costTuple[1], costTuple[0]));
+      } else {
+        return [];
+      }
+    }
+    
+    getBuildingCapacity(building, nextLevel) {
+      const buildCapacityTool = _.find(building.levelTools, ['id', 'capacity']);
+      const currentLevel = building.level || 0;
+      const addLevel = nextLevel ? 1 : 0;
+      if (buildCapacityTool) {
+        return buildCapacityTool.valueGetter(currentLevel + addLevel);
+      } else {
+        return null;
       }
     }
   }

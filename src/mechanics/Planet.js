@@ -21,10 +21,10 @@ const MONTHLY_FOOD_DEMAND_PER_EMPLOYEE = 30 * DAILY_FOOD_DEMAND_PER_EMPLOYEE;
 
 const MINIMAL_EMPLOYEES_COUNT = 0;
 
-const EMPLOYEES_PER_BUILDING_LEVEL_COUNT = {
-  mine: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
-  farm: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
-};
+// const EMPLOYEES_PER_BUILDING_LEVEL_COUNT = {
+//   mine: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
+//   farm: { 1: 9, 2: 18, 3: 27, 4: 36, 5: 45 },
+// };
 
 export default class Planet {
   
@@ -37,6 +37,7 @@ export default class Planet {
     this.x = x;
     this.y = y;
     this.state = 'uncolonized';
+    this.influenceDrawingProgress = 0;
     
     this.workers = 0;
     this.employedWorkers = 0;
@@ -145,8 +146,8 @@ export default class Planet {
   getAllEmployeesCount() {
     const quarters = _.find(this.buildings, ['id', 'livingQuarters']);
     if (quarters) {
-      const quartersCapacityInfo = _.find(quarters.levelInfo, ['id', 'capacity']);
-      return quartersCapacityInfo.valueGetter(quarters.level);
+      const quartersCapacityTool = _.find(quarters.levelTools, ['id', 'capacity']);
+      return quartersCapacityTool.valueGetter(quarters.level);
     } else {
       return MINIMAL_EMPLOYEES_COUNT;
     }
@@ -189,8 +190,9 @@ export default class Planet {
   getEmployableCountInIndustry(industry) {
     const building = this._findIndustryBuilding(industry);
     if (!building) return 0;
-
-    return EMPLOYEES_PER_BUILDING_LEVEL_COUNT[industry][building.level];
+    
+    const capacityTool = _.find(building.levelTools, ['id', 'capacity']);
+    return capacityTool.valueGetter(building.level);
   }
   
   _getIndustry(industry) {

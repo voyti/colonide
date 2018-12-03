@@ -2,11 +2,37 @@
   ng-show="tooltip.item.id && tooltip.referenceRect"
   ng-style="{ top: tooltip.referenceRect.topPosition, left: tooltip.referenceRect.leftPosition }">
   
-  <div class="item-name">{{tooltip.item.name}} ({{tooltip.item.amount}})</div>
-  <div class="item-quality" ng-class="tooltip.item.quality">{{tooltip.item.quality}}</div>
-  <div class="img-holder" ng-class="tooltip.item.quality">
+  <div ng-if="tooltip.item.type !== 'building'" class="item-name">{{tooltip.item.name}} ({{tooltip.item.amount}})</div>
+  <div ng-if="tooltip.item.type === 'building'" class="item-name">{{tooltip.item.name}} {{tooltip.item.getBuildingLevelInRoman(tooltip.item)}}</div>
+  
+  <div class="item-quality" ng-class="tooltip.item.quality">{{ tooltip.item.quality || tooltip.item.type }}</div>
+  <div class="img-holder" ng-class="[tooltip.item.quality, tooltip.item.type]">
     <img ng-src="{{tooltip.item.iconSrc}}"></img>
   </div>
-
+  
+  <div ng-if="tooltip.item.type === 'building'">
+    <div ng-if="tooltip.item.maxLevel > 1">
+      <div ng-if="tooltip.item.level === tooltip.item.maxLevel">Maximum upgrade reached</div>
+      <div ng-if="tooltip.getBuildingCapacity(tooltip.item, false)">
+        <div>Current capacity: {{tooltip.buildingCurrentLevelCapacity}}</div>
+        <div>Upgraded capacity: {{tooltip.buildingNextLevelCapacity}}</div>
+      </div>
+    </div>
+  </div>
   <div class="item-description">{{tooltip.item.description}}</div>
+  
+  <div ng-if="tooltip.item.type === 'building'" class="bottom-info">
+    <div ng-if="tooltip.item.maxLevel > 1 && tooltip.item.level !== tooltip.item.maxLevel">Upgrade cost: 
+      <span ng-repeat="item in tooltip.buildingNextLevelCost">
+        <item-icon item="item" class="small-icon" no-background="true"></item-icon>
+      </span>
+    </div>
+    
+    <div ng-if="tooltip.item.maxLevel === 1">Building cost:
+      <span ng-repeat="item in tooltip.buildingNextLevelCost">
+        <item-icon item="item" class="small-icon" no-background="true"></item-icon>
+      </span>
+    </div>
+  </div>
+
 </div>

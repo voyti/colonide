@@ -36,14 +36,7 @@ class ItemIconController {
     }
     
     formatBuildingLevel(building) {
-      const ARABIC_TO_ROMAN = {
-        1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X',
-      };
-      
-      if (building.maxLevel > 1) {
-        return ARABIC_TO_ROMAN[building.level];
-      }
-      return '';
+      return building.getBuildingLevelInRoman(building);
     }
     
     setHover(isHover) {

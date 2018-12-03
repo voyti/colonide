@@ -89,7 +89,7 @@ const ITEMS = [{
 
 export default class MineralsService {
   
-  static _getMineralItemById (id, amount) {
+  static getMineralItemById (id, amount) {
     const item = _.find(ITEMS, ['id', id]);
     if (!item) console.warn('No mineral found with id ', id);
     const resultItem = _.isNil(amount) ? item : _.assign(item, { amount });
@@ -98,11 +98,11 @@ export default class MineralsService {
   
   static getYieldForLevelAndTool(level, tool) {
     return _.map(POSSIBLE_YIELD_PER_MINE_LEVEL[level], (id) => {
-      const item = this._getMineralItemById(id);
+      const item = this.getMineralItemById(id);
       const minYield = item.maxYield * (YIELD_INCREASE_PER_MINE_LEVEL * level) +
         (tool ? item.maxYield * (tool.additionalChance) : 0);
       
-      return this._getMineralItemById(id, _.random(minYield, item.maxYield));
+      return this.getMineralItemById(id, _.random(minYield, item.maxYield));
     });
   }
   

@@ -5,10 +5,10 @@
     </div>
   </div>
   
-  <div class="text-label resources-info">Building Resources:     
+  <div class="text-label resources-info">Materials:     
     <span ng-if="manager.inventories.buildingMaterials.length"
       ng-repeat="item in manager.inventories.buildingMaterials">
-      <item-icon item="item" no-background="true"></item-icon>
+      <item-icon item="item" class="small-icon" no-background="true"></item-icon>
     </span>
     <span ng-if="!manager.inventories.buildingMaterials.length">
       <img class="small-indented-icon" src="/resources/icons/empty_icon.svg"></img>
@@ -35,7 +35,7 @@
     <!--<div ng-show="'false'" class="building-name">{{building.name}}</div>-->
     <!--<img class="building-icon" ng-src="{{building.iconSrc}}"></img>-->
     <!--<div class="building-info">-->
-    <!--  <div class="info-item" ng-repeat="info in building.levelInfo">-->
+    <!--  <div class="info-item" ng-repeat="info in building.levelTools">-->
     <!--    {{info.label}}{{info.valueGetter(building.level)}}{{info.valueSuffix || ''}}-->
     <!--  </div>-->
     <!--</div>-->

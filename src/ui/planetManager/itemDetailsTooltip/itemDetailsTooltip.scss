@@ -47,6 +47,9 @@ $iconMaxHeight: 100px;
     background-size: cover;
     padding: 6px 0;
     
+    &.building {
+      padding: 0;
+    }
     
     &.common {
       background: radial-gradient(circle at center,$color-ui-common-quality , transparent 45%);
@@ -75,5 +78,10 @@ $iconMaxHeight: 100px;
     text-align: justify;
     font-size: 16px;
     line-height: 1.1em;
+  }
+  
+  div.bottom-info {
+    position: absolute;
+    bottom: 2px;
   }
 }

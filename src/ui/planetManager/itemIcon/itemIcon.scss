@@ -1,9 +1,11 @@
 @import 'src/ui/_variables.scss';
 
+$storage-cell-x-small-width: 22px;
+$storage-cell-x-small-height: 22px;
 
-.item-icon-container {
-  display: inline-block;
-  
+$storage-cell-x-small-img-width: 22px;
+$storage-cell-x-small-img-height: 22px;
+
 $storage-cell-small-width: 38px;
 $storage-cell-small-height: 38px;
 
@@ -16,7 +18,10 @@ $storage-cell-large-height: 100px;
 $storage-cell-large-img-width: 92px;
 $storage-cell-large-img-height: 92px;
 
-.inventory-item {
+.item-icon-container {
+  display: inline-block;
+
+  .inventory-item {
 	  display: inline-block;
     // position: relative;
     margin: 1px 1px;
@@ -84,5 +89,24 @@ $storage-cell-large-img-height: 92px;
     .inventory-item {
       background: none;
     }
+  }
 }
+
+item-icon.small-icon .item-icon-container {
+  .inventory-item.small {
+    width: $storage-cell-x-small-width;
+    height: $storage-cell-x-small-height; 
+    margin-bottom: 8px;
+    
+    .bottom-left-label {
+      font-size: 14px;
+      top: 12px;
+      left: 0;
+    }
+    
+    .item-icon-image {
+      max-width: $storage-cell-x-small-img-width;
+      max-height: $storage-cell-x-small-img-height;
+    }
+  }
 }
