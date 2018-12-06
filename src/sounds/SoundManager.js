@@ -9,6 +9,7 @@ export default class SoundManager {
         'farm_action': 'farm_action',
         'mine_action': 'mine_action',
         'mine_complete': 'mine_complete',
+        'farm_complete': 'farm_complete',
         
         'game_start': 'music_1',
         'game_random_music_1': 'music_1',

@@ -6,7 +6,7 @@ import GameStateInterface from 'GameStateInterface';
 
 const MAX_PROGRESS = 100;
 const INDUSTRY_CLICK_TIMEOUT = 1000;
-const INDUSTRY_CLICK_CONTRIBUTION = 2;
+const INDUSTRY_CLICK_CONTRIBUTION = 5;
 
 export default class IndustryPanel {
     constructor() {
@@ -114,6 +114,7 @@ class IndustryPanelController {
           this.receivedFarmResources = null;
           this.farmResourcesIn = false;
         }, 3000);
+        this.SoundManager.play('farm_complete');
       }
     }
     

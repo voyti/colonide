@@ -7,6 +7,8 @@ import PlanetService from './PlanetService';
 import OrganicService from './OrganicService';
 import MineralsService from './MineralsService';
 import BuildingsService from './BuildingsService';
+import VehiclesService from './VehiclesService';
+import ShipsService from './ShipsService';
 import IndustryToolsService from './IndustryToolsService';
 
 
@@ -43,6 +45,9 @@ export default class Planet {
     this.employedWorkers = 0;
     this.buildings = isHabitable ? BuildingsService.getStartBuildings() : [];
     this.inventory = isHabitable ? OrganicService.getStartFoodInventory() : [];
+    this.vehicles = [];
+    this.ships = [];
+    
     this.industries = {
       mine: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
       farm: { employed: 0, tool: IndustryToolsService.getDefaultIndustryTool() },
@@ -244,8 +249,22 @@ export default class Planet {
   }  
   
   // application: 'building-material' | 'ship-material | 'food'
-  getInventoryByApplication(application) {
+  _getInventoryByApplication(application) {
     return _.filter(this.inventory, (item) => _.includes(item.applications, application));
+  }
+  
+  // application: 'building-material' | 'ship-material | 'food' 
+  getItemsByApplication(application) {
+    const allItemsByApplication = [
+      ...OrganicService.getOrganicItemsByApplication(application, 0),
+      ...MineralsService.getMineralsByApplication(application, 0),
+    ];
+    const inventoryItems = this._getInventoryByApplication(application);
+    return _.map(allItemsByApplication, (item) => {
+      const itemFromInventory = _.find(inventoryItems, ['id', item.id]);
+      if (itemFromInventory) { return itemFromInventory; }
+      else {return item;  }
+    });
   }
   
   _getIdFromInventory(id) {
@@ -261,8 +280,50 @@ export default class Planet {
     }
   }
   
+  getVehiclesOfType(type) {
+  const vehiclesInventory = this._getVehiclesInventory();
+    if (type === 'built') {
+      return vehiclesInventory;
+    } else if (type === 'available') {
+      return VehiclesService.getAvailableVehicles(vehiclesInventory);
+    }
+  }  
+  
+  getShipsOfType(type) {
+  const shipsInventory = this._getShipsOnOrbit();
+    if (type === 'on-orbit') {
+      return shipsInventory;
+    } else if (type === 'available') {
+      return ShipsService.getAvailableShips(shipsInventory);
+    }
+  }
+  
   _getBuildingsInventory() {
     return this.buildings;
+  }
+  
+  _getVehiclesInventory() {
+    return this.vehicles;
+  }  
+  
+  _getShipsOnOrbit() {
+    return this.ships;
+  }
+  
+  _addBuildingToInventory(building) {
+    this.buildings.push(building);
+  }
+  
+  _addVehicleToInventory(vehicle) {
+    this.vehicles.push(vehicle);
+  }
+  
+  _getAllBuiltAndAvailableBuildings() {
+    return [...this.getBuildingsOfType('built'), ...this.getBuildingsOfType('available')];
+  }  
+  
+  _getAllBuiltAndAvailableVehicles() {
+    return [...this.getVehiclesOfType('built'), ...this.getVehiclesOfType('available')];
   }
   
   onIndustryProgressFinished(industry) {
@@ -289,6 +350,20 @@ export default class Planet {
     });
   }
   
+  _checkIfItemsAvailableInInventory(items) {
+    let isAvailable = true;
+    
+    _.forEach(items, (item) => {
+      const existing = this._getIdFromInventory(item.id);
+      if (existing) {
+        if (item.amount > existing.amount) isAvailable = false;
+      } else {
+        isAvailable = false;
+      }
+    });
+    return isAvailable;
+  }
+  
   removeFromInventory(items) {
     _.forEach(items, (item) => {
       if (item.amount === 0) return;
@@ -311,5 +386,44 @@ export default class Planet {
   // @debug
   addCompleteInventory() {
     this._addToInventory([...MineralsService.getAllItems(), ...OrganicService.getAllItems()]);
+  }
+  
+  startBuildingOrUpgrade(building) {
+    const buildCostTool = _.find(building.levelTools, ['id', 'buildCost']);
+    const cost = _.map(buildCostTool.valueGetter(building.level + 1), (costTuple) => MineralsService.getMineralItemById(costTuple[1], costTuple[0]));
+    const buildPossible = this._checkIfItemsAvailableInInventory(cost);
+    
+    if (buildPossible) {
+      const allBuildings = this._getAllBuiltAndAvailableBuildings();
+      const buildingInstance = _.find(allBuildings, ['id', building.id]);
+      this.removeFromInventory(cost);
+      
+      if (buildingInstance.level) {
+        buildingInstance.level++;
+      } else {
+        buildingInstance.level = 1;
+        this._addBuildingToInventory(buildingInstance);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  startBuildingVehicle(vehicle) {
+    const buildCostTool = _.find(vehicle.levelTools, ['id', 'buildCost']);
+    const cost = _.map(buildCostTool.valueGetter(vehicle.level + 1), (costTuple) => MineralsService.getMineralItemById(costTuple[1], costTuple[0]));
+    const buildPossible = this._checkIfItemsAvailableInInventory(cost);
+
+    if (buildPossible) {
+      const allVehicles = this._getAllBuiltAndAvailableVehicles();
+      const vehicleInstance = _.find(allVehicles, ['id', vehicle.id]);
+
+      vehicleInstance.level = 1;
+      this._addVehicleToInventory(vehicleInstance);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -4,8 +4,8 @@ import GameConstants from 'GameConstants';
 
 const COST_PER_BUILDING_LEVEL = {
   livingQuarters: {
-      1: [['50', 'iron'], ['20', 'aluminium']],
-      2: [['70', 'iron'], ['30', 'aluminium']],
+      1: [['30', 'iron'], ['10', 'aluminium']],
+      2: [['50', 'iron'], ['20', 'aluminium']],
       3: [['90', 'iron'], ['40', 'aluminium']],
       4: [['110', 'iron'], ['50', 'aluminium']],
       5: [['130', 'iron'], ['60', 'aluminium']],
@@ -15,14 +15,14 @@ const COST_PER_BUILDING_LEVEL = {
       // 9: [['210', 'iron'], ['100', 'aluminium']],
       // 10: [['230', 'iron'], ['110', 'aluminium']],
     }, mine: {
-      1: [['50', 'iron'], ['20', 'aluminium']],
-      2: [['70', 'iron'], ['30', 'aluminium']],
+      1: [['30', 'iron'], ['10', 'aluminium']],
+      2: [['50', 'iron'], ['20', 'aluminium']],
       3: [['90', 'iron'], ['40', 'aluminium']],
       4: [['110', 'iron'], ['50', 'aluminium']],
       5: [['130', 'iron'], ['60', 'aluminium']],
     }, farm: {
-      1: [['50', 'iron'], ['20', 'aluminium']],
-      2: [['70', 'iron'], ['30', 'aluminium']],
+      1: [['30', 'iron'], ['10', 'aluminium']],
+      2: [['50', 'iron'], ['20', 'aluminium']],
       3: [['90', 'iron'], ['40', 'aluminium']],
       4: [['110', 'iron'], ['50', 'aluminium']],
       5: [['130', 'iron'], ['60', 'aluminium']],
@@ -56,15 +56,12 @@ const BUILDINGS = [
     getBuildingLevelInRoman,
     levelTools: [{
       id: 'buildCost',
-      // label: 'Build Cost: ',
       valueGetter: (buildingLevel) => COST_PER_BUILDING_LEVEL['livingQuarters'][buildingLevel],
     }, {
       id: 'capacity',
-      label: 'Capacity: ',
       valueGetter: (buildingLevel) => EMPLOYEES_PER_BUILDING_LEVEL_COUNT['livingQuarters'][buildingLevel],
       valueSuffix: 'employees',
     }],
-    costPerLevel: COST_PER_BUILDING_LEVEL['livingQuarters'],
     maxLevel: 5,
   }, {
     id: 'mine',
@@ -76,11 +73,9 @@ const BUILDINGS = [
     getBuildingLevelInRoman,
     levelTools: [{
       id: 'buildCost',
-      // label: 'Build Cost: ',
       valueGetter: (buildingLevel) => COST_PER_BUILDING_LEVEL['mine'][buildingLevel],
     }, {
       id: 'capacity',
-      label: 'Capacity: ',
       valueGetter: (buildingLevel) => EMPLOYEES_PER_BUILDING_LEVEL_COUNT['mine'][buildingLevel],
       valueSuffix: 'employees',
     }],
@@ -94,11 +89,9 @@ const BUILDINGS = [
     getBuildingLevelInRoman,
     levelTools: [{
       id: 'buildCost',
-      // label: 'Build Cost: ',
       valueGetter: (buildingLevel) => COST_PER_BUILDING_LEVEL['farm'][buildingLevel],
     }, {
       id: 'capacity',
-      label: 'Capacity: ',
       valueGetter: (buildingLevel) => EMPLOYEES_PER_BUILDING_LEVEL_COUNT['farm'][buildingLevel],
       valueSuffix: 'employees',
     }],
@@ -112,7 +105,6 @@ const BUILDINGS = [
     getBuildingLevelInRoman,
     levelTools: [{
       id: 'buildCost',
-      // label: 'Build Cost: ',
       valueGetter: () => [['120', 'iron'], ['60', 'aluminium']],
     }],
   }, {
@@ -125,7 +117,6 @@ const BUILDINGS = [
     getBuildingLevelInRoman,
     levelTools: [{
       id: 'buildCost',
-      // label: 'Build Cost: ',
       valueGetter: () => [['120', 'iron'], ['60', 'aluminium']],
     }],
   }, {
@@ -137,7 +128,6 @@ const BUILDINGS = [
     maxLevel: 1,
     getBuildingLevelInRoman,
     levelTools: [{
-      // label: 'Build Cost: ',
       id: 'buildCost',
       valueGetter: () => [['200', 'iron'], ['200', 'aluminium']],
     }],

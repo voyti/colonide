@@ -1,0 +1,10 @@
+@import 'src/ui/_variables.scss';
+
+.manager-fleet-container {
+  .visualization-panel {
+     .img-holder > img {
+      transform: scale(1.2)!important;
+      padding-top: 23px!important;
+    }   
+  }
+}

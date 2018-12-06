@@ -1,3 +1,34 @@
 <div class="manager-fleet-container">
-  FLEET
+  <div class="visualization-panel">
+    <div class="img-holder">
+        <img src="/resources/visualizations/fleet.jpg"></img>
+    </div>
+  </div>
+  
+  <div class="text-label resources-info" ng-class="{'flash-materials': manager.notEnoughMaterials}">Materials:     
+    <span ng-if="manager.inventories.shipMaterials.length"
+      ng-repeat="item in manager.inventories.shipMaterials">
+      <item-icon item="item" class="small-icon" no-background="true"></item-icon>
+    </span>
+    <span ng-if="!manager.inventories.shipMaterials.length">
+      <img class="small-indented-icon" src="/resources/icons/empty_icon.svg"></img>
+    </span>
+  </div>
+  
+  <div class="text-label large">Fleet In Orbit</div>
+    <span ng-repeat="ship in manager.orbitingShips">
+      <item-icon
+        item="ship"
+        configuration="building">
+      </item-icon>
+    </span>  
+    <div ng-if="manager.orbitingShips.length === 0" class="empty-panel-label">Nothing in orbit</div>  
+    
+  <div class="text-label large">Build Ships</div>
+    <span ng-repeat="ship in manager.availableShips">
+      <item-icon
+        item="ship"
+        configuration="building">
+      </item-icon>
+    </span>
 </div>

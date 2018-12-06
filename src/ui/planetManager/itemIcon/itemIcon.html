@@ -1,11 +1,18 @@
 <div class="item-icon-container" ng-class="{'no-background': icon.noBackground }">
-  <div class="inventory-item" ng-class="[icon.isBuildingConfig() ? 'large' : 'small', icon.item.id]"
+  <div class="inventory-item" ng-class="[icon.isBuildingConfig() ? 'large' : 'small', icon.isBuildingConfig()? 'building' : '']"
     ng-mouseenter="icon.setHover(true)"
     ng-mouseleave="icon.setHover(false)">
       <div class="relative-holder">
         <span class="bottom-left-label text-shadow-outline">{{icon.bottomLeftLabel}}</span>
         <span class="top-right-label">{{icon.topRightLabel}}</span>
         <img class="item-icon-image" ng-src="{{icon.item.iconSrc}}"></img>
+        <div 
+          class="upgrade-overlay text-shadow-outline"
+          ng-if="icon.item.maxLevel && icon.item.level !== icon.item.maxLevel"
+          ng-click="icon.upgradeOrBuild(icon.item)">
+            <span ng-show="icon.item.maxLevel > 1 && icon.item.level < icon.item.maxLevel">⭎UPGRADE</span>
+            <span ng-show="icon.item.maxLevel === 1">＋BUILD</span>
+        </div>
       </div>
   </div>
 </div>

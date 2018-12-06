@@ -17,6 +17,7 @@ const ITEMS = [{
     iconSrc: '/resources/minerals/iron.png',
     applications: ['building-material'],
     quality: 'common',
+    minYield: 12,
     maxYield: 24,
     valueRange: [4, 6],
     description: 'Absolute cornerstone of any structure built in the colony. Can be melted to remove impurities, reduce carbon content and obtain steel. No building or ship would be complete without this resource.',
@@ -27,6 +28,7 @@ const ITEMS = [{
     iconSrc: '/resources/minerals/aluminium.png',
     applications: ['building-material', 'ship-material'],
     quality: 'common',
+    minYield: 6,
     maxYield: 12,
     valueRange: [11, 19],
     description: 'With a third the weight of steel, aluminium has many uses in the space industry. Interestingly, unlike iron rusting, the aluminium oxide sticks to the original metal, shielding it from further decay rather than breaking apart. Not that oxidation is too much of a problem in space.',
@@ -37,6 +39,7 @@ const ITEMS = [{
     iconSrc: '/resources/minerals/titanium.png',
     applications: ['ship-material'],
     quality: 'rare',
+    minYield: 3,
     maxYield: 7,
     valueRange: [75, 125],
     description: 'Only half as heavy as steel and twice as strong as aluminium, this metal is a very valuable building material. It has been tested for use in space from early days, and has proven very useful - parts made of titanium can take atmospheric reentry heat with no shielding.',
@@ -96,18 +99,25 @@ export default class MineralsService {
     return angular.copy(item);
   }
   
+  static getMineralsByApplication(application, amount) {
+    const prototypes = _.filter(ITEMS, (item) => _.includes(item.applications, application));
+    return _.map(_.map(prototypes, 'id'), (id) => this.getMineralItemById(id, amount));
+  }
+  
   static getYieldForLevelAndTool(level, tool) {
-    return _.map(POSSIBLE_YIELD_PER_MINE_LEVEL[level], (id) => {
+    const fullYield = _.map(POSSIBLE_YIELD_PER_MINE_LEVEL[level], (id) => {
       const item = this.getMineralItemById(id);
-      const minYield = item.maxYield * (YIELD_INCREASE_PER_MINE_LEVEL * level) +
-        (tool ? item.maxYield * (tool.additionalChance) : 0);
+      const minYield = item.minYield || (item.maxYield * (YIELD_INCREASE_PER_MINE_LEVEL * level) +
+        (tool ? item.maxYield * (tool.additionalChance) : 0));
       
-      return this.getMineralItemById(id, _.random(minYield, item.maxYield));
+      const receivedAmount = _.random(minYield, item.maxYield);
+      return receivedAmount > 0 ? this.getMineralItemById(id, receivedAmount) : null;
     });
+    return _.compact(fullYield);
   }
   
   // @debug
   static getAllItems() {
-   return _.map(ITEMS, (item) => (item.amount = 4, item)); 
+   return _.map(ITEMS, (item) => (item.amount = 100, item)); 
   }
 }

@@ -9,10 +9,21 @@
   }
   
   .resources-info {
+    transition: opacity 0.5s;
     .inventory-item {
       top: 10px;
       // transform: scale(0.7);
     }
+    
+    &.flash-materials {
+      opacity: 0.5;
+      animation: flash-bg 0.5s;
+    }
   }
+}
 
+@keyframes flash-bg {
+  0% { background-color: initial; }
+  50% { background-color: $color-red-violet-1; }
+  100% { background-color: initial; }
 }

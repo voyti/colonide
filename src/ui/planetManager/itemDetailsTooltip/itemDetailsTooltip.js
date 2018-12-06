@@ -8,6 +8,7 @@ import MineralsService from 'mechanics/MineralsService';
 
 const PANEL_WIDTH = 300;
 const PANEL_HEIGHT = 350;
+const BUILDABLE_TYPES = ['building', 'vehicle', 'ship'];
 
 export default class ItemDetailsTooltip {
     constructor() {
@@ -91,5 +92,9 @@ class ItemDetailsTooltipController {
       } else {
         return null;
       }
+    }
+    
+    isItemBuildable() {
+      return _.includes(BUILDABLE_TYPES, this.item && this.item.type);
     }
   }

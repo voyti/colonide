@@ -61,6 +61,31 @@ $storage-cell-large-img-height: 92px;
       }
     }
     
+    .upgrade-overlay {
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+      background-color: $color-ocean-blue-0;
+      cursor: pointer;
+      text-align: center;
+      line-height: 6em;
+      font-weight: bold;
+    }
+    
+    &.building {
+      &:hover {
+        .upgrade-overlay {
+          opacity: 0.8;
+        }
+      }
+        
+    }
+    
     span.bottom-left-label {
       position: absolute;
       bottom: -1px;

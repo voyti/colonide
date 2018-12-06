@@ -26,5 +26,15 @@
   
   <div class="separator"></div>
   <div class="text-label large">In Production</div>
-  <div class="empty-panel-label">Nothing in production</div>
+  <div class="empty-panel-label">Nothing in production</div>  
+  
+  <div class="separator"></div>
+  <div class="text-label large">Actions</div>
+  <div class="relative-holder action-icon-button">
+    <img src="/resources/icons/action_expedition.svg"
+      ng-class="[manager.isActionAvailable('launch_expedition') ? 'available' : 'unavailable']">
+    </img>
+    <span class="absolute-text-label text-shadow-outline">Launch Expedition</span>
+
+  </div>
 </div>

@@ -39,6 +39,8 @@ const ITEMS = [
     name: 'Zutato',
     type: 'organic',
     iconSrc: '/resources/organic/zutato.png',
+    applications: ['food'],
+    nutrition: 3,
     quality: 'rare',
     nutrition: 2,
     maxYield: 32,
@@ -49,8 +51,9 @@ const ITEMS = [
     name: 'Green Soybeans',
     type: 'organic',
     iconSrc: '/resources/organic/soybeans.png',
+    applications: ['food'],
     quality: 'rare',
-    nutrition: 3,
+    nutrition: 2,
     maxYield: 68,
     valueRange: [1.8, 2.2],
     description: 'These very nutritious beans offer over 120 kcal and about 10 grams of protein per 100g serving. Additionaly, soybean oil is among the most popular vegetable oils. Last but not least, you can make crayons with those.',
@@ -110,13 +113,13 @@ export default class OrganicService {
     ];
   }
   
-  static _getOrganicItemsByApplication(application) {
+  static getOrganicItemsByApplication(application, amount) {
     const prototypes = _.filter(ITEMS, (item) => _.includes(item.applications, application));
-    return _.map(_.map(prototypes, 'id'), (id) => this._getOrganicItemById(id));
+    return _.map(_.map(prototypes, 'id'), (id) => this._getOrganicItemById(id, amount));
   }
   
   static getAllEdibleFood(planetInventory) {
-    const foodIds = _.map(this._getOrganicItemsByApplication('food'), 'id');
+    const foodIds = _.map(this.getOrganicItemsByApplication('food'), 'id');
     return _.filter(planetInventory, (item) => _.includes(foodIds, item.id));
   }
   
@@ -127,13 +130,13 @@ export default class OrganicService {
   static getFoodEquivalentOfNutritionUnitsFromInventory(planetInventory, targetNutrition) {
     const result = [];
     let remainingNutrition = targetNutrition;
-    const foodIds = _.map(this._getOrganicItemsByApplication('food'), 'id');
+    const foodIds = _.map(this.getOrganicItemsByApplication('food'), 'id');
     
     _.forEach(_.reverse(foodIds), (foodId) => {
       const inventoryFood = angular.copy(_.find(planetInventory, ['id', foodId]));
-      const totalFoodNutrition = inventoryFood.amount * inventoryFood.nutrition;
       
       if (inventoryFood && remainingNutrition > 0) {
+        const totalFoodNutrition = inventoryFood.amount * inventoryFood.nutrition;
         if (remainingNutrition >= totalFoodNutrition) {
           remainingNutrition -= totalFoodNutrition;
         } else if (remainingNutrition < totalFoodNutrition) {
@@ -149,17 +152,19 @@ export default class OrganicService {
   }
   
   static getYieldForLevelAndTool(level, tool) {
-    return _.map(POSSIBLE_YIELD_PER_FARM_LEVEL[level], (id) => {
+    const fullYield = _.map(POSSIBLE_YIELD_PER_FARM_LEVEL[level], (id) => {
       const item = this._getOrganicItemById(id);
       const minYield = item.maxYield * (YIELD_INCREASE_PER_FARM_LEVEL * level) +
         (tool ? item.maxYield * (tool.additionalChance) : 0);
-      
-      return this._getOrganicItemById(id, _.random(minYield, item.maxYield));
+        
+      const receivedAmount = _.random(minYield, item.maxYield);
+      return receivedAmount > 0 ? this._getOrganicItemById(id, receivedAmount) : null;
     });
+    return _.compact(fullYield);
   }
   
   // @debug
   static getAllItems() {
-   return _.map(ITEMS, (item) => (item.amount = 4, item)); 
+   return _.map(ITEMS, (item) => (item.amount = 100, item)); 
   }
 }

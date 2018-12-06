@@ -12,16 +12,23 @@
         <span>{{panel.mineProgress}}/{{panel.maxProgress}}</span>
         <div class="received-resources" ng-show="panel.receivedMineResources" ng-class="{'items-in': panel.mineResourcesIn }">
           <div class="received-item" ng-repeat="item in panel.receivedMineResources">
-            +<item-icon item="item" no-background="true"></item-icon>
+            +<item-icon
+              item="item"
+              ng-class="[panel.receivedMineResources.length > 4 ? 'small-icon' : '']"
+              no-background="true">
+            
+            </item-icon>
           </div>
         </div>
       </div>
       
       <div class="add-employee" ng-click="panel.addEmployeeInIndustry('mine')">
         <img src="/resources/icons/add_miner.svg">
-        <span class="employes-info">
+        <div class="employes-info">
+          <span>
           {{panel.planet.getEmployedCountInIndustry('mine')}}/{{panel.planet.getEmployableCountInIndustry('mine')}}
-        </span>
+          </span>
+        </div>
       </div>
       
       <div class="tool-slot mine-tool" ng-class="[panel.getToolInfo('mine').quality]">
@@ -44,16 +51,21 @@
         <span>{{panel.farmProgress}}/{{panel.maxProgress}}</span>
         <div class="received-resources" ng-show="panel.receivedFarmResources" ng-class="{'items-in': panel.farmResourcesIn }">
           <div class="received-item" ng-repeat="item in panel.receivedFarmResources">
-            +<item-icon item="item" no-background="true"></item-icon>
+            +<item-icon
+              item="item"
+              ng-class="[panel.receivedFarmResources.length > 4 ? 'small-icon' : '']"
+              no-background="true"></item-icon>
           </div>
         </div>
       </div>
       
       <div class="add-employee" ng-click="panel.addEmployeeInIndustry('farm')">
         <img src="/resources/icons/add_farmer.svg">
-        <span class="employes-info">
+        <div class="employes-info">
+          <span>
           {{panel.planet.getEmployedCountInIndustry('farm')}}/{{panel.planet.getEmployableCountInIndustry('farm')}}
-        </span>
+          </span>
+        </div>
       </div>
       
       <div class="tool-slot farm-tool" ng-class="[panel.getToolInfo('farm').quality]">

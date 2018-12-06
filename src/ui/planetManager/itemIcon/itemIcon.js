@@ -13,6 +13,7 @@ export default class ItemIcon {
         item: '<',
         noBackground: '<',
         configuration: '@',
+        upgradeOrBuildCallback: '&',
       };
     }
 }
@@ -36,11 +37,15 @@ class ItemIconController {
     }
     
     formatBuildingLevel(building) {
-      return building.getBuildingLevelInRoman(building);
+      return building.getBuildingLevelInRoman && building.getBuildingLevelInRoman(building);
     }
     
     setHover(isHover) {
       const event = isHover ? 'item-hover-in' : 'item-hover-out';
       this.$rootScope.$emit(event, this.$element, this.item);
+    }
+    
+    upgradeOrBuild(item) {
+      this.upgradeOrBuildCallback({ item }); 
     }
   }

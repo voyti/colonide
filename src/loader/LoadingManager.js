@@ -56,9 +56,10 @@ export default class LoadingManager {
 
     game.load.audio('thud', 'resources/audio/push.mp3');
     game.load.audio('thud_bounce', 'resources/audio/disabled_bounce.mp3');
-    game.load.audio('farm_action', 'resources/audio/farm_action.wav');
+    game.load.audio('farm_action', 'resources/audio/farm_action.mp3');
     game.load.audio('mine_action', 'resources/audio/mine_action.mp3');
     game.load.audio('mine_complete', 'resources/audio/mine_complete.mp3');
+    game.load.audio('farm_complete', 'resources/audio/farm_complete.mp3');
 
     game.load.audio('colonize_progress', 'resources/audio/colonize_progress.mp3');
     game.load.audio('upbeat_drums', 'resources/audio/colonize_done.mp3');

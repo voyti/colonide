@@ -1,3 +1,4 @@
+@import 'src/ui/_index.scss';
 @import 'src/ui/_variables.scss';
 
 $slot-width: 38px;
@@ -45,10 +46,11 @@ $INDUSTRY_CLICK_TIMEOUT: 1s;
       position: absolute;
       bottom: 4px;
       left: 40%;
-      font-size: 26px;
-      font-weight: bold;
-      -webkit-text-stroke: #333;
-      -webkit-text-stroke-width: 1.3px;
+      font-size: 22px;
+      // font-weight: bold;
+      // -webkit-text-stroke: #333;
+      // -webkit-text-stroke-width: 1.3px;
+      @include text-shadow-outline;
     }
     
     .industry-progress {
@@ -88,7 +90,8 @@ $INDUSTRY_CLICK_TIMEOUT: 1s;
         opacity: 0;
         position: absolute;
         top: -40px;
-        right: 0;
+        left: 0;
+        width: 260px;
         &.items-in {
           animation: items-in-out 3s;
         }
@@ -104,15 +107,21 @@ $INDUSTRY_CLICK_TIMEOUT: 1s;
     position: relative;
     display: inline-block;
     cursor: pointer;
+    text-align: center;
     
     .employes-info {
       position: absolute;
+      width: 100%;
       top: 12px;
-      left: 7px;
-      font-size: 22px;
-      font-weight: bold;
-      -webkit-text-stroke: #333;
-      -webkit-text-stroke-width: 1.2px;
+      text-align: center;
+      // font-weight: bold;
+      // -webkit-text-stroke: #333;
+      // -webkit-text-stroke-width: 1.2px;
+      > span {
+        position: static;
+        font-size: 18px;
+        @include text-shadow-outline;
+      }
     }
     
     &:hover {

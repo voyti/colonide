@@ -1,6 +1,7 @@
 @import 'src/ui/_variables.scss';
 @import 'src/ui/planetManager/managerTabs/storage.scss';
 @import 'src/ui/planetManager/managerTabs/buildings.scss';
+@import 'src/ui/planetManager/managerTabs/fleet.scss';
 
 .planet-manager-container {
   .management-tabs-select {
@@ -40,6 +41,39 @@
         left: 4px;
         bottom: 4px;
       }
+    }
+  }
+  
+  $action-button-size: 72px;
+  
+  .action-icon-button {
+    margin: 4px;
+    width: $action-button-size;
+    height: $action-button-size;
+
+    img {
+      max-width: $action-button-size;
+      max-height: $action-button-size;
+      transition: opacity 0.2s;
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &.unavailable {
+        filter: grayscale(80%);
+      }
+      
+      &.available {
+        cursor: pointer;
+      }
+    }
+    
+    span {
+      text-align: center;
+      width: $action-button-size;
+      bottom: -28px;
+      left: 0;
+      font-size: 14px;
     }
   }
   

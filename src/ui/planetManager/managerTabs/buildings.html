@@ -5,7 +5,7 @@
     </div>
   </div>
   
-  <div class="text-label resources-info">Materials:     
+  <div class="text-label resources-info" ng-class="{'flash-materials': manager.notEnoughMaterials}">Materials:     
     <span ng-if="manager.inventories.buildingMaterials.length"
       ng-repeat="item in manager.inventories.buildingMaterials">
       <item-icon item="item" class="small-icon" no-background="true"></item-icon>
@@ -19,17 +19,38 @@
     <span ng-repeat="building in manager.builtBuildings">
       <item-icon
         item="building"
+        upgrade-or-build-callback="manager.startBuildingOrUpgrade(item)"
+        configuration="building">
+      </item-icon>
+    </span>
+    <span ng-repeat="building in manager.builtVehicles">
+      <item-icon
+        item="building"
         configuration="building">
       </item-icon>
     </span>  
     
   <div class="text-label large">Available</div>
-    <span ng-repeat="building in manager.availableBuildings">
+    <span ng-repeat="building in manager.availableVehicles">
       <item-icon
         item="building"
+        upgrade-or-build-callback="manager.startBuildingOrUpgrade(item)"
         configuration="building">
       </item-icon>
     </span>
+    
+    
+    <span ng-repeat="building in manager.availableBuildings">
+      <item-icon
+        item="building"
+        upgrade-or-build-callback="manager.startBuildingOrUpgrade(item)"
+        configuration="building">
+      </item-icon>
+    </span>
+    <div
+      ng-if="manager.availableBuildings.length === 0 && manager.availableVehicles.length === 0"
+      class="empty-panel-label">No more buildings available</div> 
+
 
     
     <!--<div ng-show="'false'" class="building-name">{{building.name}}</div>-->
