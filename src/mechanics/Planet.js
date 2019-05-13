@@ -71,9 +71,9 @@ export default class Planet {
   }
   
   setDrawingData(planetTheme, planetSprite) {
-    this.drawingData.theme = planetTheme;
-    this.drawingData.theme.background = _.sample(planetTheme.backgrounds);
-    this.drawingData.sprite = planetSprite;
+    this.drawingData.theme = this.drawingData.theme || planetTheme;
+    this.drawingData.theme.background = this.drawingData.theme.background || _.sample(planetTheme.backgrounds);
+    this.drawingData.sprite = this.drawingData.sprite || planetSprite;
   }
   
   _generateInfo() {
